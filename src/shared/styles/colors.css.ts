@@ -8,8 +8,7 @@ export const colors = createGlobalTheme(":root", {
   textDark: "#0F172A",
   textMuted: "#64748B",
 
-  borderColor: "#E2E8F0",
-
+  border: "#E2E8F0",
   accentYellow: "#FEF08A",
   successGreen: "#10B981",
   warningOrange: "#F59E0B",

@@ -1,75 +1,69 @@
 import { mediaQueries } from "@/shared/styles/breakpoints";
+import { colors } from "@/shared/styles/colors.css";
 import { style } from "@vanilla-extract/css";
 
-const colors = {
-  background: "#FFFFFF",
-  border: "#E2E8F0",
-  foreground: "#0F172A",
-  secondary: "#64748B",
-  primary: "#2563EB",
-  primaryHover: "#1D4ED8",
-  textWhite: "#FFFFFF",
-};
+export const wrapper = style({
+  backgroundColor: "white",
+  borderBottom: `1px solid ${colors.border}`,
 
-export const headerWrapper = style({
   position: "relative",
   zIndex: 10,
-  borderBottom: `1px solid ${colors.border}`,
-  backgroundColor: colors.background,
 });
 
-export const headerContainer = style({
-  margin: "0 auto",
-  display: "flex",
-  height: "60px",
+export const container = style({
   width: "100%",
-  maxWidth: "1010px",
+  height: "60px",
+
+  display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  paddingLeft: "16px",
-  paddingRight: "16px",
+  margin: "0 auto",
+  paddingInline: "2rem",
+
   "@media": {
     [mediaQueries.smartphone]: {
-      paddingLeft: "0", // aqui na vdd foi usado min
-      paddingRight: "0",
+      paddingInline: "1rem",
     },
   },
 });
 
 export const logo = style({
+  color: colors.textDark,
   fontSize: "20px",
   fontWeight: "bold",
-  letterSpacing: "-1.2px",
-  color: colors.foreground,
   textDecoration: "none",
+  letterSpacing: "-1.2px",
 });
 
-export const actionsContainer = style({
-  display: "none",
+export const actions = style({
+  display: "flex",
   alignItems: "center",
   gap: "24px",
+
   fontSize: "13px",
+
   "@media": {
-    "(min-width: 768px)": {
-      display: "flex",
+    [mediaQueries.smartphone]: {
+      display: "none",
     },
   },
 });
 
 export const linkLogin = style({
-  color: colors.secondary,
+  color: colors.textDark,
   textDecoration: "none",
   transition: "color 0.2s",
   ":hover": {
-    color: colors.foreground,
+    color: colors.textDark,
   },
 });
 
 export const btnPrimary = style({
-  backgroundColor: colors.primary,
-  color: colors.textWhite,
   padding: "8px 16px",
+
   borderRadius: "8px",
+  backgroundColor: colors.primary,
+  color: "white",
   fontWeight: "600",
   textDecoration: "none",
   transition: "background-color 0.2s",
@@ -79,20 +73,24 @@ export const btnPrimary = style({
 });
 
 export const mobileMenuButton = style({
-  position: "relative",
-  zIndex: 30,
-  display: "flex",
-  height: "40px",
   width: "40px",
+  height: "40px",
+
+  display: "none",
   alignItems: "center",
   justifyContent: "center",
-  color: colors.foreground,
+
+  color: colors.textDark,
   background: "transparent",
   border: "none",
   cursor: "pointer",
+
+  position: "relative",
+  zIndex: 30,
+
   "@media": {
-    "(min-width: 768px)": {
-      display: "none",
+    [mediaQueries.smartphone]: {
+      display: "flex",
     },
   },
 });
