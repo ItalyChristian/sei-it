@@ -1,10 +1,10 @@
 import Header from "@/layout/components/Header";
 
-interface MainShellProps {
+interface AppShellProps {
   children: React.ReactNode;
 }
 
-export const MainShell = ({ children }: MainShellProps) => {
+export const AppShell = ({ children }: AppShellProps) => {
   return (
     <div>
       <Header />
