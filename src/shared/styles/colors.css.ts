@@ -1,25 +1,22 @@
 import { createGlobalTheme } from "@vanilla-extract/css";
 
 export const colors = createGlobalTheme(":root", {
-  primary: "#3458f5",
-  primaryHover: "#2448e6",
+  primary: "#2563EB",
+  primaryHover: "#1D4ED8",
+  offWhite: "#F8FAFC",
 
-  secondary: "#686a73",
-  muted: "#696b75",
+  textDark: "#0F172A",
+  textMuted: "#64748B",
 
-  accentPeach: "#ffc99f",
-  accentYellow: "#fff2c3",
-  accentLavender: "#e1e7ff",
-  imagePlaceholder: "#9caba3",
-  badgeBackground: "#e4eaff",
+  borderColor: "#E2E8F0",
 
-  background: "#faf9f5",
-  foreground: "#191d2d",
+  accentYellow: "#FEF08A",
+  successGreen: "#10B981",
+  warningOrange: "#F59E0B",
+  dangerRed: "#EF4444",
 
-  border: "#e4e6ed",
-  borderSoft: "#dfe1e8",
-  surface: "#ffffff",
-  surfaceHover: "#f5f5f3",
+  shadowSm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+  shadowMd: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
 });
 
 export type Colors = typeof colors;
