@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { TicketCategoryName as CategoryEnum } from "../ticket-category.types";
+import { TicketCategoryName as CategoryNameEnum } from "../ticket-category.types";
 
-export const ticketCategoryNameSchema = z.nativeEnum(CategoryEnum);
+export const ticketCategoryNameSchema = z.nativeEnum(CategoryNameEnum);
 
 export const ticketCategorySchema = z.object({
   id: z.string().uuid(),
