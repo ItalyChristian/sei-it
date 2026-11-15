@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import * as styles from "./styles.css";
 
-export default function Header() {
+export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -92,4 +92,4 @@ export default function Header() {
       )}
     </header>
   );
-}
+};
