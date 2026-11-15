@@ -2,15 +2,16 @@ import { style } from "@vanilla-extract/css";
 import { colors } from "../colors.css";
 
 export const btnPrimary = style({
-  padding: "8px 16px",
+  padding: "8px 1rem",
+
+  color: "white",
+  fontWeight: 500,
+  fontSize: "0.8rem",
+  textDecoration: "none",
+  transition: `${colors.offWhite} 0.2s`,
 
   borderRadius: "8px",
   backgroundColor: colors.primary,
-  color: "white",
-  fontWeight: "600",
-  textDecoration: "none",
-  transition: "background-color 0.2s",
-
   cursor: "pointer",
 
   ":hover": {
