@@ -1,5 +1,8 @@
 "use client";
 
+import { btnPrimary } from "@/shared/styles/components/buttons.css";
+import { Button } from "@radix-ui/themes";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import * as styles from "./styles.css";
@@ -18,9 +21,10 @@ export const Header = () => {
           <Link href="#login" className={styles.linkLogin}>
             Log in
           </Link>
-          <Link href="#courses" className={styles.btnPrimary}>
+
+          <Button id="#open-ticket" className={btnPrimary}>
             Say something
-          </Link>
+          </Button>
         </div>
 
         <button
@@ -30,29 +34,8 @@ export const Header = () => {
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen((isOpen) => !isOpen)}
           className={styles.mobileMenuButton}
-          // style={{ display: "flex", zIndex: 30 }}
         >
-          {menuOpen ? (
-            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
-              <path
-                d="m6 6 12 12M18 6 6 18"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="1.5"
-              />
-            </svg>
-          ) : (
-            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
-              <path
-                d="M3 7h18M3 12h18M3 17h18"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="1.5"
-              />
-            </svg>
-          )}
+          {menuOpen ? <X /> : <Menu />}
         </button>
       </div>
 
@@ -80,14 +63,15 @@ export const Header = () => {
           >
             Log in
           </Link>
-          <Link
-            href="#courses"
+
+          <Button
+            id="#open-ticket"
             onClick={() => setMenuOpen(false)}
-            className={styles.btnPrimary}
+            className={btnPrimary}
             style={{ padding: "12px 32px", fontSize: "18px" }}
           >
             Say something
-          </Link>
+          </Button>
         </nav>
       )}
     </header>

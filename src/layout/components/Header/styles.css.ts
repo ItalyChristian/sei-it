@@ -58,20 +58,6 @@ export const linkLogin = style({
   },
 });
 
-export const btnPrimary = style({
-  padding: "8px 16px",
-
-  borderRadius: "8px",
-  backgroundColor: colors.primary,
-  color: "white",
-  fontWeight: "600",
-  textDecoration: "none",
-  transition: "background-color 0.2s",
-  ":hover": {
-    backgroundColor: colors.primaryHover,
-  },
-});
-
 export const mobileMenuButton = style({
   width: "40px",
   height: "40px",
