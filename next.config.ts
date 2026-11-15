@@ -1,17 +1,8 @@
+import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
-  },
-};
+const withVanillaExtract = createVanillaExtractPlugin();
 
-export default nextConfig;
+const nextConfig: NextConfig = {};
+
+export default withVanillaExtract(nextConfig);
