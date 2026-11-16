@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TicketCategoryName as CategoryNameEnum } from "../ticket-category.types";
+import { TicketCategoryName as CategoryNameEnum } from "../category/ticket-category.types";
 
 export const ticketCategoryNameSchema = z.nativeEnum(CategoryNameEnum);
 
