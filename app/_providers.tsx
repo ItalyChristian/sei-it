@@ -1,3 +1,4 @@
+import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 
@@ -6,5 +7,9 @@ export default function AppProviders({
 }: {
   children: React.ReactNode;
 }) {
-  return <Theme appearance="dark">{children}</Theme>;
+  return (
+    <QueryProvider>
+      <Theme appearance="dark">{children}</Theme>
+    </QueryProvider>
+  );
 }
