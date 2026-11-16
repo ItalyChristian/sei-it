@@ -1,5 +1,5 @@
 import dados from "@/mocks/dados.json";
-import { TicketCategory } from "./ticket-category.types";
+import { TicketCategory } from "../../entities/ticket/category/ticket-category.types";
 
 const categories = dados.categorias as TicketCategory[];
 
