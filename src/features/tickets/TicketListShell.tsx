@@ -1,4 +1,4 @@
-import { ChatArea } from "@/chat/ChatArea";
+import { ChatArea } from "@/features/chat/ChatArea";
 import { SideBar } from "@/layout/components/SideBar";
 
 export const TicketListShell = () => {

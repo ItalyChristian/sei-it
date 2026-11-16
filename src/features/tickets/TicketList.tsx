@@ -1,11 +1,11 @@
 "use client";
 
+import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import { useTickets } from "@/entities/ticket/useTickets";
 import * as ticket from "@/features/tickets/ticket.css";
 import clsx from "clsx";
 import { TicketListEmptyState } from "./empty-state";
 import { TicketListLoading } from "./loading";
-import { statusBadge, statusLabel } from "./ticket-status-map";
 import { snippet as buildSnippet } from "./trim-description";
 
 export const TicketList = () => {

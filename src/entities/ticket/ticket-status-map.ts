@@ -5,7 +5,7 @@ import {
   ticketOpen,
   ticketProgress,
   ticketResolved,
-} from "./ticket-state-badge.css";
+} from "./styles/ticket-state-badge.css";
 
 export const statusBadge: Record<SlaStatus, string> = {
   [SlaStatus.OPEN]: ticketOpen,
