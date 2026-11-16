@@ -9,13 +9,13 @@ import type { UserSummary } from "@/entities/user/user.types";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useMemo, useState } from "react";
-import * as styles from "./manager-tickets-table.css";
 import { getResponsibleOptions } from "./responsible-options";
-import { ticketSla } from "./SlaColumnBody";
-import { TicketFilters } from "./TicketFilters";
+import { SlaColumnBody } from "./SlaColumnBody";
+import * as styles from "./tickets-table.css";
+import { TicketsTableFilters } from "./TicketsTableFilters";
 import { TicketTitle } from "./TicketTitle";
 
-interface FilteredTicketsProps {
+interface TicketsTableProps {
   tickets: Ticket[];
   users: UserSummary[];
   categories: TicketCategory[];
@@ -23,13 +23,13 @@ interface FilteredTicketsProps {
   isLoading: boolean;
 }
 
-export function FilteredTickets({
+export function TicketsTable({
   tickets,
   users,
   categories,
   referenceDate,
   isLoading,
-}: FilteredTicketsProps) {
+}: TicketsTableProps) {
   const [search, setSearch] = useState("");
   const [responsibleId, setResponsibleId] = useState<string | null>(null);
   const [status, setStatus] = useState<SlaStatus | null>(null);
@@ -50,7 +50,7 @@ export function FilteredTickets({
     [users],
   );
 
-  const filteredTickets = useMemo(() => {
+  const TicketsTable = useMemo(() => {
     const query = search.trim().toLocaleLowerCase("pt-BR");
 
     return tickets.filter((ticket) => {
@@ -80,7 +80,7 @@ export function FilteredTickets({
 
   return (
     <>
-      <TicketFilters
+      <TicketsTableFilters
         onResponsibleChange={(value) => {
           setResponsibleId(value);
           setFirst(0);
@@ -112,7 +112,7 @@ export function FilteredTickets({
         rows={10}
         rowsPerPageOptions={[10, 25, 50]}
         size="small"
-        value={filteredTickets}
+        value={TicketsTable}
       >
         <Column
           field="numero"
@@ -154,6 +154,7 @@ export function FilteredTickets({
           )}
           sortable
         />
+
         <Column
           field="status"
           header="Status"
@@ -167,7 +168,7 @@ export function FilteredTickets({
         <Column
           field="prazo_resolucao"
           header="SLA"
-          body={(ticket: Ticket) => ticketSla(ticket, referenceDate)}
+          body={(ticket: Ticket) => SlaColumnBody(ticket, referenceDate)}
         />
       </DataTable>
     </>

@@ -1,12 +1,12 @@
 // import { TicketListShell } from "@/features/tickets/TicketListShell";
-import { ManagerTicketsTable } from "@/features/tickets/table/Datatable";
+import { TicketsTableWrapper } from "@/features/tickets/table/TicketTableWrapper";
 import { AppShell } from "@/layout/shells/AppShell";
 
 export default function Home() {
   return (
     <AppShell>
       {/* <TicketListShell /> */}
-      <ManagerTicketsTable />
+      <TicketsTableWrapper />
     </AppShell>
   );
 }

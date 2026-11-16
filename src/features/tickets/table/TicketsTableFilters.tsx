@@ -1,23 +1,12 @@
 "use client";
 
-import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
+import { TicketsTableFiltersProps } from "./filters.types";
 import { statusOptions } from "./status-options-map";
-import type { ResponsibleOption } from "./responsible-options";
-import * as styles from "./manager-tickets-table.css";
+import * as styles from "./tickets-table-filters.css";
 
-interface TicketFiltersProps {
-  search: string;
-  responsibleId: string | null;
-  status: SlaStatus | null;
-  responsibleOptions: ResponsibleOption[];
-  onSearchChange: (value: string) => void;
-  onResponsibleChange: (value: string | null) => void;
-  onStatusChange: (value: SlaStatus | null) => void;
-}
-
-export function TicketFilters({
+export function TicketsTableFilters({
   search,
   responsibleId,
   status,
@@ -25,7 +14,7 @@ export function TicketFilters({
   onSearchChange,
   onResponsibleChange,
   onStatusChange,
-}: TicketFiltersProps) {
+}: TicketsTableFiltersProps) {
   return (
     <div className={styles.toolbar}>
       <InputText
