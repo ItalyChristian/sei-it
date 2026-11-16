@@ -3,6 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   width: "380px",
+  height: "100vh",
   display: "flex",
   flexDirection: "column",
 
