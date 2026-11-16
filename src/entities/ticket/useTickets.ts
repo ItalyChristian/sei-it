@@ -5,5 +5,6 @@ export function useTickets() {
   return useQuery({
     queryKey: ["tickets"],
     queryFn: getTickets,
+    placeholderData: [],
   });
 }
