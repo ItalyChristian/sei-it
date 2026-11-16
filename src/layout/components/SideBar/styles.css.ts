@@ -2,8 +2,8 @@ import { colors } from "@/shared/styles/colors.css";
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
-  width: "380px",
-  height: "100vh",
+  maxWidth: "25rem",
+  height: "calc(100vh - 60px)",
   display: "flex",
   flexDirection: "column",
 
