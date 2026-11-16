@@ -9,7 +9,7 @@ export default function AppProviders({
 }) {
   return (
     <QueryProvider>
-      <Theme appearance="dark">{children}</Theme>
+      <Theme>{children}</Theme>
     </QueryProvider>
   );
 }
