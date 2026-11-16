@@ -20,6 +20,16 @@ export const badgeVariants = styleVariants({
     color: "#92400E",
   },
 
+  awaitingClient: {
+    backgroundColor: "#FEF3C7",
+    color: "#92400E",
+  },
+
+  resolved: {
+    backgroundColor: "#DBEAFE",
+    color: "#1E40AF",
+  },
+
   closed: {
     backgroundColor: "#D1FAE5",
     color: "#065F46",
@@ -28,4 +38,9 @@ export const badgeVariants = styleVariants({
 
 export const ticketOpen = style([badge, badgeVariants.open]);
 export const ticketProgress = style([badge, badgeVariants.progress]);
+export const ticketAwaitingClient = style([
+  badge,
+  badgeVariants.awaitingClient,
+]);
+export const ticketResolved = style([badge, badgeVariants.resolved]);
 export const ticketClosed = style([badge, badgeVariants.closed]);
