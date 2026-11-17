@@ -10,3 +10,5 @@ export interface User {
   zoneinfo: string;
   empresa: string;
 }
+
+export type UserSummary = Pick<User, "id" | "nome">;
