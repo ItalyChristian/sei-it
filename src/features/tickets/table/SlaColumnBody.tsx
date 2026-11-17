@@ -1,8 +1,8 @@
-import type { Ticket } from "@/entities/ticket/ticket.types";
 import {
   slaDeadlineBadge,
   type SlaDeadlineStatus,
 } from "@/entities/sla/sla-deadline-status-map";
+import type { Ticket } from "@/entities/ticket/ticket.types";
 
 const hourInMs = 60 * 60 * 1000;
 
@@ -32,7 +32,7 @@ export function SlaColumnBody(ticket: Ticket, asOfDate: string) {
     const minutes = Math.floor((remaining % hourInMs) / 60000);
     label = `${hours}h ${minutes}m`;
   } else if (isOverdue) {
-    label = "Estourado";
+    label = "Excedido";
   }
 
   return <span className={slaDeadlineBadge[status]}>{label}</span>;

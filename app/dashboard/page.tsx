@@ -1,3 +1,4 @@
+import { TicketsTableWrapper } from "@/features/tickets/table/TicketTableWrapper";
 import { AppShell } from "@/layout/shells/AppShell";
 import * as styles from "./styles.css";
 
@@ -11,6 +12,8 @@ export default function Dahboard() {
             Acompanhe os chamados e seus prazos de atendimento.
           </p>
         </header>
+
+        <TicketsTableWrapper />
       </main>
     </AppShell>
   );
