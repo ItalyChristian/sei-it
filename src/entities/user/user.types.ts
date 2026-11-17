@@ -1,5 +1,5 @@
-import { UserLocale } from "./user-locale.types";
-import { UserRole } from "./user-roles.types";
+import { UserLocale, UserZoneInfo } from "./user-locale.enum";
+import { UserRole } from "./user-roles.enum";
 
 export interface User {
   id: string;
@@ -7,8 +7,12 @@ export interface User {
   email: string;
   perfil: UserRole;
   locale: UserLocale;
-  zoneinfo: string;
-  empresa: string;
+  zoneinfo: UserZoneInfo | string;
+
+  empresa?: string;
+  grupo_id?: string;
+  grupos_ids?: string[];
+  avatarUrl?: string;
 }
 
-export type UserSummary = Pick<User, "id" | "nome">;
+export type UserSummary = Pick<User, "id" | "nome" | "perfil">;
