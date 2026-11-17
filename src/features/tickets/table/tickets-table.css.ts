@@ -1,6 +1,6 @@
 import { colors } from "@/shared/styles/colors.css";
 import { radii } from "@/shared/styles/sizes.css";
-import { globalStyle, style, styleVariants } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const ticketNumber = style({
   color: colors.textMuted,
@@ -24,35 +24,6 @@ export const ticketTitle = style({
 export const ticketCategory = style({
   color: colors.textMuted,
   fontSize: "12px",
-});
-
-export const priorityBadge = style({
-  display: "inline-flex",
-  alignItems: "center",
-  padding: "4px 9px",
-  borderRadius: radii.full,
-  fontSize: "11px",
-  fontWeight: 600,
-  whiteSpace: "nowrap",
-});
-
-export const priorityVariants = styleVariants({
-  critica: {
-    color: colors.dangerRed,
-    backgroundColor: `color-mix(in srgb, ${colors.dangerRed} 12%, white)`,
-  },
-  alta: {
-    color: colors.warningOrange,
-    backgroundColor: `color-mix(in srgb, ${colors.warningOrange} 14%, white)`,
-  },
-  media: {
-    color: colors.textDark,
-    backgroundColor: `color-mix(in srgb, ${colors.accentYellow} 55%, white)`,
-  },
-  baixa: {
-    color: colors.successGreen,
-    backgroundColor: `color-mix(in srgb, ${colors.successGreen} 12%, white)`,
-  },
 });
 
 export const loadingState = style({

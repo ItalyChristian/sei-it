@@ -1,12 +1,15 @@
 import type { Ticket } from "@/entities/ticket/ticket.types";
-import * as styles from "./sla-status.css";
+import {
+  slaDeadlineBadge,
+  type SlaDeadlineStatus,
+} from "@/entities/sla/sla-deadline-status-map";
 
 const hourInMs = 60 * 60 * 1000;
 
-export function SlaColumnBody(ticket: Ticket, referenceDate: string) {
+export function SlaColumnBody(ticket: Ticket, asOfDate: string) {
   const resolvedAt = ticket.resolvido_em ?? ticket.fechado_em;
 
-  const referenceTimestamp = Date.parse(resolvedAt ?? referenceDate);
+  const referenceTimestamp = Date.parse(resolvedAt ?? asOfDate);
 
   const remaining = Date.parse(ticket.prazo_resolucao) - referenceTimestamp;
 
@@ -14,11 +17,11 @@ export function SlaColumnBody(ticket: Ticket, referenceDate: string) {
 
   const isAtRisk = !resolvedAt && remaining < 2 * hourInMs;
 
-  const variant = isOverdue
-    ? styles.slaVariants.overdue
+  const status: SlaDeadlineStatus = isOverdue
+    ? "overdue"
     : isAtRisk
-      ? styles.slaVariants.risk
-      : styles.slaVariants.ok;
+      ? "risk"
+      : "ok";
 
   let label = "Cumprido";
 
@@ -32,5 +35,5 @@ export function SlaColumnBody(ticket: Ticket, referenceDate: string) {
     label = "Estourado";
   }
 
-  return <span className={`${styles.slaBadge} ${variant}`}>{label}</span>;
+  return <span className={slaDeadlineBadge[status]}>{label}</span>;
 }

@@ -1,27 +1,18 @@
 "use client";
 
-import { priorityLabels } from "@/entities/sla/sla-priority.types";
+import { priorityBadge, priorityLabels } from "@/entities/sla/sla-priority-map";
 import { SlaStatus } from "@/entities/sla/sla-status.types";
-import type { TicketCategory } from "@/entities/ticket/category/ticket-category.types";
 import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import type { Ticket } from "@/entities/ticket/ticket.types";
-import type { UserSummary } from "@/entities/user/user.types";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useMemo, useState } from "react";
 import { getResponsibleOptions } from "./responsible-options";
 import { SlaColumnBody } from "./SlaColumnBody";
+import { TicketsTableProps } from "./table.types";
 import * as styles from "./tickets-table.css";
 import { TicketsTableFilters } from "./TicketsTableFilters";
 import { TicketTitle } from "./TicketTitle";
-
-interface TicketsTableProps {
-  tickets: Ticket[];
-  users: UserSummary[];
-  categories: TicketCategory[];
-  referenceDate: string;
-  isLoading: boolean;
-}
 
 export function TicketsTable({
   tickets,
@@ -146,9 +137,7 @@ export function TicketsTable({
           field="prioridade"
           header="Prioridade"
           body={(ticket: Ticket) => (
-            <span
-              className={`${styles.priorityBadge} ${styles.priorityVariants[ticket.prioridade]}`}
-            >
+            <span className={priorityBadge[ticket.prioridade]}>
               {priorityLabels[ticket.prioridade]}
             </span>
           )}
