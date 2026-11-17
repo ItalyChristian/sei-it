@@ -27,7 +27,7 @@ export function TicketsTableFilters({
       <Dropdown
         aria-label="Filtrar por responsável"
         className={styles.filterDropdown}
-        onChange={(event) => onResponsibleChange(event.value)}
+        onChange={(event) => onResponsibleChange(event.value ?? null)}
         optionLabel="name"
         optionValue="id"
         options={responsibleOptions}
@@ -38,7 +38,7 @@ export function TicketsTableFilters({
       <Dropdown
         aria-label="Filtrar por status"
         className={styles.filterDropdown}
-        onChange={(event) => onStatusChange(event.value)}
+        onChange={(event) => onStatusChange(event.value ?? null)}
         options={statusOptions}
         optionLabel="label"
         optionValue="value"
