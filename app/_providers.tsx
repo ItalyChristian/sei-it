@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/features/auth/AuthContext";
+import { AuthProvider } from "@/shared/contexts/session.context";
 import { QueryProvider } from "@/shared/providers/QueryProvider";
 import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
