@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-import { UserRole } from "@/entities/user/user-roles.enum";
 import { User } from "@/entities/user/user.types";
 import dados from "@/mocks/dados.json";
 import { Select } from "@/shared/components/Select";
@@ -22,13 +21,7 @@ export default function ProfileSelector() {
   const handleSelectUser = (user: User) => {
     login(user);
 
-    if (user.perfil === UserRole.MANAGER) {
-      router.push("/dashboard");
-    } else if (user.perfil === UserRole.OPERATOR) {
-      router.push("/pagina-teste");
-    } else {
-      router.push("/");
-    }
+    router.push("/dashboard");
   };
 
   const handleDropdownChange = (selectedId: string) => {
