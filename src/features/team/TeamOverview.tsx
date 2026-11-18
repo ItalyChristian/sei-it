@@ -1,29 +1,11 @@
 "use client";
 
-import { getTickets } from "@/entities/ticket/ticket.api";
-import { Ticket } from "@/entities/ticket/ticket.types";
+import { useTickets } from "@/entities/ticket/useTickets";
 import { KpiGrid, KpiItem } from "@/shared/components/Cards/KpiGrid";
-import { useEffect, useState } from "react";
 import { useManagerKpis } from "./useManagerKpis";
 
 export function TeamOverview() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const data = await getTickets();
-        setTickets(data);
-      } catch (error) {
-        console.error("Erro ao buscar chamados", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    load();
-  }, []);
-
+  const { data: tickets = [], isLoading } = useTickets();
   const kpis = useManagerKpis(tickets);
 
   if (isLoading) return <div>Carregando KPIs...</div>;
@@ -31,12 +13,8 @@ export function TeamOverview() {
   const managerKpis: KpiItem[] = [
     { title: "Chamados Abertos Hoje", value: kpis.abertos },
     { title: "SLA Cumprido (Geral)", value: kpis.slaCumprido, tone: "success" },
-    {
-      title: "Risco de Estouro (Próximas 2h)",
-      value: kpis.emRisco,
-      tone: "danger",
-    },
-    { title: "Tempo Médio de Atendimento", value: kpis.tma },
+    { title: "Risco de Estouro (2h)", value: kpis.emRisco, tone: "danger" },
+    { title: "Tempo Médio", value: kpis.tma },
   ];
 
   return <KpiGrid items={managerKpis} />;
