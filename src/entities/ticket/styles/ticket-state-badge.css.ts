@@ -1,46 +1,8 @@
-import { radii } from "@/shared/styles/sizes.css";
-import { style, styleVariants } from "@vanilla-extract/css";
+import { badgeBase, tone } from "@/shared/styles/components/badge-base.css";
+import { style } from "@vanilla-extract/css";
 
-export const badge = style({
-  fontSize: "11px",
-  fontWeight: 600,
-  padding: "4px 8px",
-  borderRadius: radii.full,
-  textTransform: "uppercase",
-});
-
-export const badgeVariants = styleVariants({
-  open: {
-    backgroundColor: "#DBEAFE",
-    color: "#1E40AF",
-  },
-
-  progress: {
-    backgroundColor: "#FEF3C7",
-    color: "#92400E",
-  },
-
-  awaitingClient: {
-    backgroundColor: "#FEF3C7",
-    color: "#92400E",
-  },
-
-  resolved: {
-    backgroundColor: "#DBEAFE",
-    color: "#1E40AF",
-  },
-
-  closed: {
-    backgroundColor: "#D1FAE5",
-    color: "#065F46",
-  },
-});
-
-export const ticketOpen = style([badge, badgeVariants.open]);
-export const ticketProgress = style([badge, badgeVariants.progress]);
-export const ticketAwaitingClient = style([
-  badge,
-  badgeVariants.awaitingClient,
-]);
-export const ticketResolved = style([badge, badgeVariants.resolved]);
-export const ticketClosed = style([badge, badgeVariants.closed]);
+export const ticketOpen = style([badgeBase, tone.neutral]);
+export const ticketProgress = style([badgeBase, tone.info]);
+export const ticketAwaitingClient = style([badgeBase, tone.warning]);
+export const ticketResolved = style([badgeBase, tone.success]);
+export const ticketClosed = style([badgeBase, tone.success]);
