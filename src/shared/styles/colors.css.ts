@@ -3,6 +3,9 @@ import { createGlobalTheme } from "@vanilla-extract/css";
 export const colors = createGlobalTheme(":root", {
   primary: "#2563EB",
   primaryHover: "#1D4ED8",
+  primaryLight: "#EFF6FF",
+  primaryBorder: "#BFDBFE",
+
   offWhite: "#F8FAFC",
 
   textDark: "#0F172A",
