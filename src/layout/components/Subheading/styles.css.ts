@@ -5,6 +5,8 @@ export const heading = style({
   display: "flex",
   flexDirection: "column",
   gap: "4px",
+  paddingInline: "2rem",
+  paddingBlock: "1rem",
 });
 
 export const title = style({
