@@ -25,9 +25,9 @@ export default function ProfileSelector() {
     if (user.perfil === UserRole.MANAGER) {
       router.push("/dashboard");
     } else if (user.perfil === UserRole.OPERATOR) {
-      router.push("/dashboard");
+      router.push("/pagina-teste");
     } else {
-      router.push("/dashboard");
+      router.push("/");
     }
   };
 
