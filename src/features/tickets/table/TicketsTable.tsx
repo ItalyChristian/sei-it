@@ -4,6 +4,7 @@ import { priorityBadge, priorityLabels } from "@/entities/sla/sla-priority-map";
 import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import type { Ticket } from "@/entities/ticket/ticket.types";
+import { dataTable } from "@/shared/styles/components/datatable.css";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useMemo, useState } from "react";
@@ -91,7 +92,7 @@ export function TicketsTable({
       />
 
       <DataTable
-        className={styles.dataTable}
+        className={dataTable}
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} chamados"
         dataKey="id"
         emptyMessage="Nenhum chamado encontrado."

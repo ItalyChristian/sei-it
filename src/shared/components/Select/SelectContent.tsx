@@ -52,12 +52,12 @@ export const SelectContent = ({ options }: SelectContentProps) => (
  *
  * 1. Lista simples — cada item é um `{ label, value }`:
  *
- *    const statusOptions = Object.values(SlaStatus).map((status) => ({
+ *    const slaStatusOptions = Object.values(SlaStatus).map((status) => ({
  *      label: statusLabel[status],
  *      value: status,
  *    }));
  *
- *    <Select.Content options={statusOptions} />
+ *    <Select.Content options={slaStatusOptions} />
  *
  *    Cada item é renderizado como `RadixSelect.Item` direto no Viewport,
  *    sem agrupamento.

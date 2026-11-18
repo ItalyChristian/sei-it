@@ -2,22 +2,27 @@ import { colors } from "@/shared/styles/colors.css";
 import { style } from "@vanilla-extract/css";
 
 export const dropdownContainer = style({
-  paddingTop: "24px",
-  borderTop: `1px solid ${colors.offWhite}`,
+  margin: 0,
+  padding: 0,
 });
 
 export const selectInput = style({
   width: "100%",
-  padding: "12px",
+  minWidth: 200,
+
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  border: `1px solid ${colors.border}`,
-  borderRadius: "8px",
-  backgroundColor: "white",
+  gap: "1rem",
+  padding: "12px",
+
   fontSize: "14px",
   outline: "none",
   textAlign: "left",
+  border: `1px solid ${colors.border}`,
+  borderRadius: "8px",
+  backgroundColor: "white",
+
   cursor: "pointer",
   ":focus": {
     borderColor: colors.primary,
@@ -26,6 +31,10 @@ export const selectInput = style({
   ":disabled": {
     cursor: "not-allowed",
     opacity: 0.6,
+  },
+
+  selectors: {
+    "&[data-placeholder]": { color: "#9ca3af" },
   },
 });
 
@@ -69,5 +78,33 @@ export const selectItem = style({
       color: colors.textMuted,
       cursor: "not-allowed",
     },
+  },
+});
+
+export const selectValue = style({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+  flex: 1,
+  textAlign: "left",
+});
+
+export const selectIcons = style({
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+  flexShrink: 0,
+});
+
+export const clearButton = style({
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 2,
+  borderRadius: 4,
+  cursor: "pointer",
+  color: "#6b7280",
+  selectors: {
+    "&:hover": { background: "#f3f4f6", color: "#111827" },
   },
 });

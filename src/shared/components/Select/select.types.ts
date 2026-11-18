@@ -7,6 +7,8 @@ export interface SelectRootProps {
   disabled?: boolean;
   placeholder?: string;
   className?: string;
+  showClear?: boolean;
+  onClear?: () => void;
 }
 
 export interface SelectOption {
