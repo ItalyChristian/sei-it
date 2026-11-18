@@ -1,5 +1,3 @@
-"use client";
-
 import { TeamOverview } from "@/features/team/TeamOverview";
 import { TicketsTableWrapper } from "@/features/tickets/table/TicketTableWrapper";
 import { AppShell } from "@/layout/shells/AppShell";
@@ -11,7 +9,7 @@ export default function ManagerView() {
       description="Acompanhe os chamados e seus prazos de atendimento."
     >
       <TeamOverview />
-      <TicketsTableWrapper />
+      <TicketsTableWrapper variant="manager" />
     </AppShell>
   );
 }
