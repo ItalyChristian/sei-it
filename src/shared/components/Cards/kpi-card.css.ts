@@ -1,5 +1,5 @@
 import { colors } from "@/shared/styles/colors.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
 
 export const kpiGrid = style({
   display: "grid",
@@ -14,8 +14,16 @@ export const title = style({
   marginBottom: "8px",
 });
 
-export const value = style({
+export const value = styleVariants({
+  default: { color: colors.textDark },
+  success: { color: colors.successGreen },
+  danger: { color: colors.dangerRed },
+  warning: { color: colors.warningOrange },
+  info: { color: colors.primary },
+});
+
+export const valueBase = style({
   fontSize: "28px",
   fontWeight: 700,
-  color: colors.textDark,
+  lineHeight: 1.2,
 });
