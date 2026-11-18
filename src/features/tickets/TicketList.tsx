@@ -4,8 +4,9 @@ import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import { useTickets } from "@/entities/ticket/useTickets";
 import * as ticket from "@/features/tickets/ticket.css";
 import clsx from "clsx";
-import { TicketListEmptyState } from "./empty-state";
-import { TicketListLoading } from "./loading";
+import { TicketListEmptyState } from "./EmptyState";
+
+import { TicketListLoading } from "./TicketListLoading";
 import { snippet as buildSnippet } from "./trim-description";
 
 export const TicketList = () => {

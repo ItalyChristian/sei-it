@@ -1,20 +1,31 @@
+"use client";
+
+import { UserRole } from "@/entities/user/user-roles.enum";
 import { TicketsTableWrapper } from "@/features/tickets/table/TicketTableWrapper";
 import { AppShell } from "@/layout/shells/AppShell";
-import * as styles from "./styles.css";
+import { useAuth } from "@/shared/contexts/session.context";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Dahboard() {
-  return (
-    <AppShell>
-      <main className={styles.page}>
-        <header className={styles.heading}>
-          <h1 className={styles.title}>Chamados da equipe</h1>
-          <p className={styles.description}>
-            Acompanhe os chamados e seus prazos de atendimento.
-          </p>
-        </header>
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
 
-        <TicketsTableWrapper />
-      </main>
+  useEffect(() => {
+    if (!isLoading && (!user || user.perfil !== UserRole.MANAGER)) {
+      router.push("/");
+    }
+  }, [user, isLoading, router]);
+
+  if (isLoading || !user) return <div>Carregando...</div>;
+
+  return (
+    <AppShell
+      title="Chamados da equipe"
+      description="Acompanhe os chamados e seus prazos de atendimento."
+    >
+      <TicketsTableWrapper />
     </AppShell>
   );
 }
