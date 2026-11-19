@@ -80,3 +80,43 @@ export const mobileMenuButton = style({
     },
   },
 });
+
+export const userName = style({
+  color: colors.textMuted,
+  fontSize: "13px",
+  fontWeight: "500",
+  whiteSpace: "nowrap",
+});
+
+export const logoutButton = style({
+  padding: "8px 16px",
+  fontSize: "13px",
+  fontWeight: "500",
+  color: colors.status.danger.text,
+  backgroundColor: "transparent",
+  border: `1px solid ${colors.status.danger.border}`,
+  borderRadius: "8px",
+  cursor: "pointer",
+  transition: "background-color 0.2s",
+  ":hover": {
+    backgroundColor: colors.status.danger.bg,
+  },
+});
+
+export const mobileNav = style({
+  position: "fixed",
+  inset: 0,
+  zIndex: 20,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "28px",
+  backgroundColor: "white",
+});
+
+export const mobileUserName = style({
+  fontSize: "18px",
+  fontWeight: "600",
+  color: colors.textDark,
+});

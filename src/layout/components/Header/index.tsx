@@ -1,14 +1,27 @@
 "use client";
 
+import { useAuth } from "@/shared/contexts/session.context";
 import { btnPrimary } from "@/shared/styles/components/buttons.css";
 import { Button } from "@radix-ui/themes";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import * as styles from "./styles.css";
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    setMenuOpen(false);
+    router.push("/");
+  };
+
+  const isAuthenticated = Boolean(user);
 
   return (
     <header className={styles.wrapper}>
@@ -18,13 +31,27 @@ export const Header = () => {
         </Link>
 
         <div className={styles.actions}>
-          <Link href="#login" className={styles.linkLogin}>
-            Log in
-          </Link>
-
-          <Button id="#open-ticket" className={btnPrimary}>
-            Say something
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <span className={styles.userName}>Olá, {user?.nome}</span>
+              <Button
+                type="button"
+                onClick={handleLogout}
+                className={styles.logoutButton}
+              >
+                Sair
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link href="#login" className={styles.linkLogin}>
+                Log in
+              </Link>
+              <Button id="#open-ticket" className={btnPrimary}>
+                Say something
+              </Button>
+            </>
+          )}
         </div>
 
         <button
@@ -43,35 +70,40 @@ export const Header = () => {
         <nav
           id="mobile-navigation"
           aria-label="Mobile navigation"
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 20,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "28px",
-            backgroundColor: "white",
-          }}
+          className={styles.mobileNav}
         >
-          <Link
-            href="#login"
-            onClick={() => setMenuOpen(false)}
-            className={styles.linkLogin}
-            style={{ fontSize: "20px", fontWeight: "600" }}
-          >
-            Log in
-          </Link>
-
-          <Button
-            id="#open-ticket"
-            onClick={() => setMenuOpen(false)}
-            className={btnPrimary}
-            style={{ padding: "12px 32px", fontSize: "18px" }}
-          >
-            Say something
-          </Button>
+          {isAuthenticated ? (
+            <>
+              <span className={styles.mobileUserName}>Olá, {user?.nome}</span>
+              <Button
+                type="button"
+                onClick={handleLogout}
+                className={styles.logoutButton}
+                style={{ padding: "12px 32px", fontSize: "18px" }}
+              >
+                Sair
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="#login"
+                onClick={() => setMenuOpen(false)}
+                className={styles.linkLogin}
+                style={{ fontSize: "20px", fontWeight: "600" }}
+              >
+                Log in
+              </Link>
+              <Button
+                id="#open-ticket"
+                onClick={() => setMenuOpen(false)}
+                className={btnPrimary}
+                style={{ padding: "12px 32px", fontSize: "18px" }}
+              >
+                Say something
+              </Button>
+            </>
+          )}
         </nav>
       )}
     </header>
