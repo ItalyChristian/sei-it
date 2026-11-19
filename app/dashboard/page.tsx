@@ -9,7 +9,7 @@ import ClientView from "./_views/ClientView";
 import ManagerView from "./_views/ManagerView";
 import OperatorView from "./_views/OperatorView";
 
-export default function Dashboar() {
+export default function Dashboard() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
