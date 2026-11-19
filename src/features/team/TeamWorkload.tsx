@@ -2,9 +2,9 @@
 
 import { Ticket } from "@/entities/ticket/ticket.types";
 import { User } from "@/entities/user/user.types";
-import { OperatorCard } from "@/shared/components/Cards/OperatorCard";
-import * as styles from "./team-workload.css";
-import { useTeamWorkload } from "./useTeamWorkload";
+import { MetricsCard } from "@/features/team/components/Metrics/MetricsCard";
+import { useTeamWorkload } from "./hooks/useTeamWorkload";
+import * as styles from "./styles/team-workload.css";
 
 interface TeamWorkloadProps {
   users: User[];
@@ -38,7 +38,7 @@ export function TeamWorkload({ users, tickets }: TeamWorkloadProps) {
       {workloads.length > 0 ? (
         <div className={styles.grid}>
           {workloads.map((workload) => (
-            <OperatorCard key={workload.user.id} workload={workload} />
+            <MetricsCard key={workload.user.id} workload={workload} />
           ))}
         </div>
       ) : (

@@ -1,9 +1,9 @@
-import * as styles from "./operator-card.css";
+import * as styles from "./metrics-card.css";
 
 export type LoadTone = "success" | "warning" | "danger";
 export type BadgeTone = "danger" | "warning";
 
-export interface OperatorCardVisuals {
+export interface MetricsCardVisuals {
   badgeLabel: string | null;
   badgeTone: BadgeTone | null;
   loadTone: LoadTone;
@@ -11,7 +11,7 @@ export interface OperatorCardVisuals {
   statusClass: string;
 }
 
-export function getOperatorCardVisuals({
+export function getMetricsCardVisuals({
   activeTickets,
   slaRiskTickets,
   overdueTickets,
@@ -19,7 +19,7 @@ export function getOperatorCardVisuals({
   activeTickets: number;
   slaRiskTickets: number;
   overdueTickets: number;
-}): OperatorCardVisuals {
+}): MetricsCardVisuals {
   let badgeLabel: string | null = null;
   let badgeTone: BadgeTone | null = null;
 

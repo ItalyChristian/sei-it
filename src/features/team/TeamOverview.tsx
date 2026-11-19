@@ -2,11 +2,11 @@
 
 import { useTickets } from "@/entities/ticket/useTickets";
 import { useUsers } from "@/entities/user/useUsers";
-import { KpiGrid, KpiItem } from "@/shared/components/Cards/KpiGrid";
-import { container } from "./styles.css";
+import { KpiGrid, KpiItem } from "@/features/team/components/Kpi/KpiGrid";
+import { useManagerKpis } from "./hooks/useManagerKpis";
+import { useTeamScope } from "./hooks/useTeamScope";
+import { cardContainer } from "./styles/styles.css";
 import { TeamWorkload } from "./TeamWorkload";
-import { useManagerKpis } from "./useManagerKpis";
-import { useTeamScope } from "./useTeamScope";
 export function TeamOverview() {
   const {
     data: tickets = [],
@@ -41,7 +41,7 @@ export function TeamOverview() {
   ];
 
   return (
-    <div className={container}>
+    <div className={cardContainer}>
       <KpiGrid items={managerKpis} />
       <TeamWorkload users={teamUsers} tickets={teamTickets} />
     </div>

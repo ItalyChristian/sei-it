@@ -1,22 +1,22 @@
-import { OperatorWorkload } from "@/features/team/useTeamWorkload";
+import { OperatorWorkload } from "@/features/team/hooks/useTeamWorkload";
 import { badgeBase, tone } from "@/shared/styles/components/badge-base.css";
-import * as styles from "./operator-card.css";
-import { getOperatorCardVisuals } from "./operator-card.helpers";
-import { container } from "./styles.css";
+import { cardContainer } from "../../styles/styles.css";
+import * as styles from "./metrics-card.css";
+import { getMetricsCardVisuals } from "./metrics-card.helpers";
 
-interface OperatorCardProps {
+interface MetricsCardProps {
   workload: OperatorWorkload;
 }
 
-export const OperatorCard = ({ workload }: OperatorCardProps) => {
+export const MetricsCard = ({ workload }: MetricsCardProps) => {
   const { user, activeTickets, slaRiskTickets, overdueTickets, loadPercent } =
     workload;
 
   const { badgeLabel, badgeTone, loadTone, statusLabel, statusClass } =
-    getOperatorCardVisuals({ activeTickets, slaRiskTickets, overdueTickets });
+    getMetricsCardVisuals({ activeTickets, slaRiskTickets, overdueTickets });
 
   return (
-    <article className={`${container} ${styles.card}`}>
+    <article className={`${cardContainer} ${styles.card}`}>
       <div className={styles.header}>
         <div className={styles.identity}>
           <div className={styles.avatar} aria-hidden="true">

@@ -1,9 +1,9 @@
 "use client";
 
 import { useTickets } from "@/entities/ticket/useTickets";
-import { KpiGrid, KpiItem } from "@/shared/components/Cards/KpiGrid";
+import { KpiGrid, KpiItem } from "@/features/team/components/Kpi/KpiGrid";
 import { useAuth } from "@/shared/contexts/session.context";
-import { useOperatorKpis } from "./useOperatorKpis";
+import { useOperatorKpis } from "./hooks/useOperatorKpis";
 
 export function OperatorOverview() {
   const { user } = useAuth();
