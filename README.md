@@ -40,12 +40,11 @@ yarn start
 
 ## Principais decisões
 
-- **Next.js (App Router) + React + TypeScript + Vanilla Extract.** A escolha do Vanilla Extract (em vez de Tailwind) permite tipagem forte dos estilos, zero runtime CSS-in-JS e uma base de design tokens centralizada (`src/shared/styles/theme.css.ts`).
+- **Next.js (App Router) + React + TypeScript + Vanilla Extract.** A escolha do Vanilla Extract permite tipagem forte dos estilos, zero runtime CSS-in-JS e uma base de design tokens centralizada (`src/shared/styles/theme.css.ts`).
 - **FDS Architecture (Feature-Oriented Domain Architecture).** O projeto segue os princípios da FDS, com organização orientada a features e estruturas de domínio reutilizáveis. Referência: [Feature-Oriented Domain Architecture for Scalable Ecosystems](https://github.com/ItalyChristian/feature-oriented-domain-architecture-for-scalable-ecosystems).
 - **TanStack Query para estado de servidor.** O `useTickets()`, `useUsers()` e `useCategories()` compartilham cache entre as telas, eliminando `useEffect` de fetch e requisições duplicadas.
 - **Data de referência centralizada.** Todo cálculo de SLA usa o `meta.agora` do JSON (via `useReferenceDate()`), garantindo que os prazos sejam calculados com o "relógio oficial" do sistema, e não com a data real do navegador.
 - **Autenticação simulada com `localStorage`.** A tela inicial permite selecionar um perfil (gestor, consultor ou cliente), que persiste a sessão mockada. O roteamento por perfil é centralizado em `app/dashboard/page.tsx`.
-- **Separação entre regra de negócio e apresentação.** KPIs são calculados em hooks (`useManagerKpis`, `useOperatorKpis`, `useTeamWorkload`), e os componentes recebem apenas os dados prontos. Componentes visuais (`KpiCard`, `WorkloadCard`) não sabem o que é "SLA" ou "risco".
 - **WebSocket planejado.** A estrutura está preparada para receber eventos em tempo real (`chamado.aberto`, `status.alterado`, `mensagem.adicionada`), mas a integração não foi concluída nesta versão.
 
 ## Gaps conhecidos
