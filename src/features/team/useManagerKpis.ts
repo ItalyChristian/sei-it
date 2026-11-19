@@ -1,11 +1,14 @@
 import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { Ticket } from "@/entities/ticket/ticket.types";
+import { useReferenceDate } from "@/shared/hooks/useReferenceData";
 import { useMemo } from "react";
 
 export function useManagerKpis(tickets: Ticket[]) {
+  const { date: referenceDate } = useReferenceDate();
+
   return useMemo(() => {
-    const now = new Date();
-    const twoHoursFromNow = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+    const now = referenceDate.getTime();
+    const twoHoursFromNow = now + 2 * 60 * 60 * 1000;
 
     const openTickets = tickets.filter(
       (t) => t.status !== SlaStatus.CLOSED && t.status !== SlaStatus.RESOLVED,
@@ -27,8 +30,8 @@ export function useManagerKpis(tickets: Ticket[]) {
       : 100;
 
     const emRisco = openTickets.filter((t) => {
-      const prazo = new Date(t.prazo_resolucao);
-      return prazo > now && prazo <= twoHoursFromNow;
+      const prazo = new Date(t.prazo_resolucao).getTime();
+      return Number.isFinite(prazo) && prazo <= twoHoursFromNow;
     }).length;
 
     let tmaStr = "0h 0m";

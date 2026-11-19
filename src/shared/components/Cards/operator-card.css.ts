@@ -1,22 +1,32 @@
 import { colors } from "@/shared/styles/colors.css";
 import { radii } from "@/shared/styles/sizes.css";
-import { style } from "@vanilla-extract/css";
+import { style, styleVariants } from "@vanilla-extract/css";
+
+export const card = style({
+  minWidth: 0,
+});
 
 export const header = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  marginBottom: "1rem",
+  gap: "12px",
+});
+
+export const identity = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "12px",
+  minWidth: 0,
 });
 
 export const avatar = style({
   width: "40px",
   height: "40px",
-
+  flexShrink: 0,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-
   color: colors.status.info.text,
   fontWeight: 600,
   fontSize: "1rem",
@@ -25,17 +35,31 @@ export const avatar = style({
 });
 
 export const name = style({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
   fontWeight: 600,
   fontSize: "15px",
 });
 
-export const loadBar = style({
-  height: " 8px",
-  margin: "1rem 0",
+export const status = styleVariants({
+  active: {
+    color: colors.successGreen,
+    fontSize: "12px",
+    fontWeight: 500,
+  },
+  idle: {
+    color: colors.textMuted,
+    fontSize: "12px",
+    fontWeight: 500,
+  },
+});
 
+export const loadBar = style({
+  height: "8px",
+  margin: "16px 0",
   background: colors.offWhite,
   borderRadius: radii.xs,
-
   overflow: "hidden",
 });
 
@@ -44,12 +68,17 @@ export const loadFill = style({
   borderRadius: radii.xs,
 });
 
+export const loadFillTone = styleVariants({
+  success: { background: colors.successGreen },
+  warning: { background: colors.warningOrange },
+  danger: { background: colors.dangerRed },
+});
+
 export const stats = style({
   display: "flex",
-  justifyContent: " space-between",
-
+  justifyContent: "space-between",
+  gap: "8px",
   color: colors.textMuted,
   fontSize: "12px",
-
-  marginBottom: "1rem",
+  marginBottom: 0,
 });

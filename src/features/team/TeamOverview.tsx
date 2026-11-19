@@ -1,21 +1,49 @@
 "use client";
 
 import { useTickets } from "@/entities/ticket/useTickets";
+import { useUsers } from "@/entities/user/useUsers";
 import { KpiGrid, KpiItem } from "@/shared/components/Cards/KpiGrid";
+import { container } from "./styles.css";
+import { TeamWorkload } from "./TeamWorkload";
 import { useManagerKpis } from "./useManagerKpis";
-
+import { useTeamScope } from "./useTeamScope";
 export function TeamOverview() {
-  const { data: tickets = [], isLoading } = useTickets();
-  const kpis = useManagerKpis(tickets);
+  const {
+    data: tickets = [],
+    isLoading: isLoadingTickets,
+    isError: ticketsError,
+  } = useTickets();
+  const {
+    data: users = [],
+    isLoading: isLoadingUsers,
+    isError: usersError,
+  } = useUsers();
 
-  if (isLoading) return <div>Carregando KPIs...</div>;
+  const { teamTickets, teamUsers } = useTeamScope(tickets, users);
+  const kpis = useManagerKpis(teamTickets);
+
+  if (ticketsError || usersError) {
+    return <div>Não foi possível carregar os dados da equipe.</div>;
+  }
+  if (isLoadingTickets || isLoadingUsers) {
+    return <div>Carregando dados da equipe...</div>;
+  }
 
   const managerKpis: KpiItem[] = [
     { title: "Chamados Abertos Hoje", value: kpis.abertos },
     { title: "SLA Cumprido (Geral)", value: kpis.slaCumprido, tone: "success" },
-    { title: "Risco de Estouro (2h)", value: kpis.emRisco, tone: "danger" },
-    { title: "Tempo Médio", value: kpis.tma },
+    {
+      title: "SLA em Risco (vencidos ou em até 2h)",
+      value: kpis.emRisco,
+      tone: "danger",
+    },
+    { title: "Tempo Médio de Atendimento", value: kpis.tma },
   ];
 
-  return <KpiGrid items={managerKpis} />;
+  return (
+    <div className={container}>
+      <KpiGrid items={managerKpis} />
+      <TeamWorkload users={teamUsers} tickets={teamTickets} />
+    </div>
+  );
 }

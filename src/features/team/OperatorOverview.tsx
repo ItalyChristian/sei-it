@@ -16,7 +16,8 @@ export function OperatorOverview() {
   const operatorKpis: KpiItem[] = [
     { title: "Meus Chamados Ativos", value: kpis.meusAtivos, tone: "info" },
     { title: "Fila do Grupo", value: kpis.filaGrupo, tone: "warning" },
-    { title: "SLA Estourando", value: kpis.slaEstourando, tone: "danger" },
+    { title: "SLA em Risco (até 2h)", value: kpis.emRisco, tone: "warning" },
+    { title: "SLA Excedido", value: kpis.excedidos, tone: "danger" }, // 🎯
   ];
 
   return <KpiGrid items={operatorKpis} />;
