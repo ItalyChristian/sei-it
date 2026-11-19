@@ -1,31 +1,46 @@
 "use client";
 
 import { UserRole } from "@/entities/user/user-roles.enum";
-import { TicketsTableWrapper } from "@/features/tickets/table/TicketTableWrapper";
-import { AppShell } from "@/layout/shells/AppShell";
 import { useAuth } from "@/shared/contexts/session.context";
-
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function Dahboard() {
+import ClientView from "./_views/ClientView";
+import ManagerView from "./_views/ManagerView";
+import OperatorView from "./_views/OperatorView";
+
+export default function Dashboard() {
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && (!user || user.perfil !== UserRole.MANAGER)) {
+    if (!isLoading && !user) {
       router.push("/");
     }
   }, [user, isLoading, router]);
 
-  if (isLoading || !user) return <div>Carregando...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Carregando...
+      </div>
+    );
+  }
 
-  return (
-    <AppShell
-      title="Chamados da equipe"
-      description="Acompanhe os chamados e seus prazos de atendimento."
-    >
-      <TicketsTableWrapper />
-    </AppShell>
-  );
+  if (!user) return null;
+
+  switch (user.perfil) {
+    case UserRole.MANAGER:
+      return <ManagerView />;
+    case UserRole.OPERATOR:
+      return <OperatorView />;
+    case UserRole.CLIENT:
+      return <ClientView />;
+    default:
+      return (
+        <div className="p-8 text-center text-red-500">
+          Perfil não reconhecido.
+        </div>
+      );
+  }
 }

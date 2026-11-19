@@ -8,4 +8,16 @@ export interface TicketsTableProps {
   categories: TicketCategory[];
   referenceDate: string;
   isLoading: boolean;
+
+  variant?: "manager" | "operator";
+  currentUserId?: string;
 }
+
+export interface TicketsTableWrapperProps {
+  variant: TicketsTableVariant;
+  initialFilter?: InitialFilter;
+}
+
+export type TicketsTableVariant = "manager" | "operator";
+
+export type InitialFilter = "all" | "mine" | "unassigned" | "sla-at-risk";
