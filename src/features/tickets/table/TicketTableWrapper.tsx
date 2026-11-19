@@ -4,8 +4,8 @@ import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { useCategories } from "@/entities/ticket/category/useCategories";
 import { useTickets } from "@/entities/ticket/useTickets";
 import { useUsers } from "@/entities/user/useUsers";
-import dados from "@/mocks/dados.json";
 import { useAuth } from "@/shared/contexts/session.context";
+import { useReferenceDate } from "@/shared/hooks/useReferenceData";
 import { useMemo } from "react";
 import { TicketsTable } from "./TicketsTable";
 import { TicketsTableWrapperProps } from "./table.types";
@@ -16,6 +16,8 @@ export function TicketsTableWrapper({
   initialFilter = "all",
 }: TicketsTableWrapperProps) {
   const { user } = useAuth();
+  const { iso: referenceDate, date: referenceDateObj } = useReferenceDate();
+
   const {
     data: tickets = [],
     isLoading: isLoadingTickets,
@@ -55,7 +57,7 @@ export function TicketsTableWrapper({
             return false;
           }
           const prazo = new Date(t.prazo_resolucao).getTime();
-          const agora = new Date(dados.meta.agora).getTime();
+          const agora = referenceDateObj.getTime();
           return prazo - agora <= 2 * 60 * 60 * 1000;
         });
       case "all":
@@ -68,7 +70,7 @@ export function TicketsTableWrapper({
     <TicketsTable
       categories={categories}
       isLoading={isLoadingTickets || isLoadingCategories || isLoadingUsers}
-      referenceDate={dados.meta.agora}
+      referenceDate={referenceDate}
       tickets={scopedTickets}
       users={users}
       variant={variant}

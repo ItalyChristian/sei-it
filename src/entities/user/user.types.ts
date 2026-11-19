@@ -1,4 +1,5 @@
-import { UserLocale, UserZoneInfo } from "./user-locale.enum";
+import { IanaTimeZone } from "@/shared/types/timezone.types";
+import { UserLocale } from "./user-locale.enum";
 import { UserRole } from "./user-roles.enum";
 
 export interface User {
@@ -7,7 +8,7 @@ export interface User {
   email: string;
   perfil: UserRole;
   locale: UserLocale;
-  zoneinfo: UserZoneInfo | string;
+  zoneinfo: IanaTimeZone;
 
   empresa?: string;
   grupo_id?: string;
