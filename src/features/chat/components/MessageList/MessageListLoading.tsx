@@ -1,5 +1,5 @@
 import { loading } from "./message-list.css";
 
-export const ChatLoading = () => {
+export const MessageListLoading = () => {
   return <div className={loading}>Carregando mensagens...</div>;
 };

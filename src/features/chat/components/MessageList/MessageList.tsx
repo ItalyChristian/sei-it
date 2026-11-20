@@ -6,7 +6,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { useEffect, useMemo, useRef } from "react";
 import { MessageBubble } from "../MessageBubble/MessageBubble";
 import { ChatEmptyState } from "./ChatEmptyState";
-import { ChatLoading } from "./ChatLoading";
+import { MessageListLoading } from "./MessageListLoading";
 import * as styles from "./message-list.css";
 
 interface MessageListProps {
@@ -56,7 +56,7 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
   }, [messages, user?.zoneinfo]);
 
   if (isLoading) {
-    return <ChatLoading />;
+    return <MessageListLoading />;
   }
 
   if (messages.length === 0) {
