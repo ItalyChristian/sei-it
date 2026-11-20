@@ -5,19 +5,17 @@ import dados from "@/mocks/dados.json";
  * Gera mensagens fake para os primeiros N chamados.
  * Usado apenas para o mock — em produção, viria da API.
  */
-function generateMockMessages(): Message[] {
+
+// Cache em memória para persistir mensagens novas
+let inMemoryMessages: Message[] | null = null;
+
+function generateInitialMessages(): Message[] {
+  if (inMemoryMessages) return inMemoryMessages;
+
   const messages: Message[] = [];
-  const ticketsWithMessages = dados.chamados.slice(0, 10);
 
-  ticketsWithMessages.forEach((ticket, index) => {
-    const solicitante = dados.usuarios.find(
-      (u) => u.id === ticket.solicitante_id,
-    );
-    const responsavel = dados.usuarios.find(
-      (u) => u.id === ticket.responsavel_id,
-    );
-
-    // Mensagem 1: abertura do solicitante
+  dados.chamados.forEach((ticket) => {
+    // Mensagem 1: abertura do solicitante. A primeira mensagem é a descrição (prévia) do ticket
     messages.push({
       id: `msg-${ticket.id}-1`,
       ticket_id: ticket.id,
@@ -26,12 +24,22 @@ function generateMockMessages(): Message[] {
       conteudo: ticket.descricao,
       criado_em: ticket.aberto_em,
     });
+  });
+
+  //  Adiciona respostas e notas apenas para os 10 primeiros
+  const ticketsWithReplies = dados.chamados.slice(0, 10);
+
+  ticketsWithReplies.forEach((ticket, index) => {
+    const responsavel = dados.usuarios.find(
+      (u) => u.id === ticket.responsavel_id,
+    );
 
     // Mensagem 2: resposta do responsável
     if (responsavel) {
       const responseTime = new Date(
         new Date(ticket.aberto_em).getTime() + 60 * 60 * 1000,
       ).toISOString();
+
       messages.push({
         id: `msg-${ticket.id}-2`,
         ticket_id: ticket.id,
@@ -41,30 +49,40 @@ function generateMockMessages(): Message[] {
           "Olá! Estou analisando o caso. Vou retornar em breve com uma atualização.",
         criado_em: responseTime,
       });
-    }
 
-    // Mensagem 3: nota interna do responsável
-    if (responsavel && index % 2 === 0) {
-      const noteTime = new Date(
-        new Date(ticket.aberto_em).getTime() + 2 * 60 * 60 * 1000,
-      ).toISOString();
-      messages.push({
-        id: `msg-${ticket.id}-3`,
-        ticket_id: ticket.id,
-        autor_id: responsavel.id,
-        tipo: "internal",
-        conteudo:
-          "Verifiquei os logs do servidor. O erro parece estar relacionado à configuração do firewall.",
-        criado_em: noteTime,
-      });
+      // Mensagem 3: nota interna do responsável
+      if (index % 2 === 0) {
+        const noteTime = new Date(
+          new Date(ticket.aberto_em).getTime() + 2 * 60 * 60 * 1000,
+        ).toISOString();
+        messages.push({
+          id: `msg-${ticket.id}-3`,
+          ticket_id: ticket.id,
+          autor_id: responsavel.id,
+          tipo: "internal",
+          conteudo:
+            "Verifiquei os logs do servidor. O erro parece estar relacionado à configuração do firewall.",
+          criado_em: noteTime,
+        });
+      }
     }
   });
 
-  return messages;
+  inMemoryMessages = messages.sort(
+    (a, b) => new Date(a.criado_em).getTime() - new Date(b.criado_em).getTime(),
+  );
+
+  return inMemoryMessages;
 }
 
 export const messagesMockDb = {
-  list: () => generateMockMessages(),
-  listByTicket: (ticketId: string) =>
-    generateMockMessages().filter((m) => m.ticket_id === ticketId),
+  listByTicket: (ticketId: string) => {
+    return generateInitialMessages().filter((m) => m.ticket_id === ticketId);
+  },
+
+  add: (message: Message) => {
+    generateInitialMessages();
+    inMemoryMessages!.push(message);
+    return message;
+  },
 };
