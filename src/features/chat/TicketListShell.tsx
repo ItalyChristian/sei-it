@@ -5,7 +5,7 @@ import { useUsers } from "@/entities/user/useUsers";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
 import { useMemo, useState } from "react";
-import { TicketList } from "../tickets/TicketList";
+import { TicketList } from "../tickets/components/TicketList";
 import { ChatArea } from "./ChatArea";
 import * as styles from "./styles/ticket-list-shell.css";
 
