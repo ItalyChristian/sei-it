@@ -5,7 +5,7 @@ import { useCategories } from "@/entities/ticket/category/useCategories";
 import { useTickets } from "@/entities/ticket/useTickets";
 import { useUsers } from "@/entities/user/useUsers";
 import { useAuth } from "@/shared/contexts/session.context";
-import { useReferenceDate } from "@/shared/hooks/useReferenceData";
+import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { useMemo } from "react";
 import { TicketsTable } from "./TicketsTable";
 import { TicketsTableWrapperProps } from "./table.types";

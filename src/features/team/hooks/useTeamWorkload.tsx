@@ -1,7 +1,7 @@
 import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { Ticket } from "@/entities/ticket/ticket.types";
 import { User } from "@/entities/user/user.types";
-import { useReferenceDate } from "@/shared/hooks/useReferenceData";
+import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { useMemo } from "react";
 
 export interface OperatorWorkload {
