@@ -1,4 +1,4 @@
-import { TicketList } from "@/features/tickets/TicketList";
+import { TicketList } from "@/features/tickets/components/TicketList";
 import { btnPrimary } from "@/shared/styles/components/buttons.css";
 import { Button } from "@radix-ui/themes";
 import { Plus } from "lucide-react";

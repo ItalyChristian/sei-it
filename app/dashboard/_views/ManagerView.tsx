@@ -1,5 +1,5 @@
 import { TeamOverview } from "@/features/team/TeamOverview";
-import { TicketsTableWrapper } from "@/features/tickets/table/TicketTableWrapper";
+import { TicketsTableWrapper } from "@/features/tickets/components/Table/TicketTableWrapper";
 import { AppShell } from "@/layout/shells/AppShell";
 
 export default function ManagerView() {
