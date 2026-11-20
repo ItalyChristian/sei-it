@@ -1,4 +1,4 @@
-import { Spinner } from "@/shared/components/Spinner";
+import { LoadingState } from "@/shared/components/LoadingState";
 import * as styles from "../styles/ticket-list.css";
 
 export const TicketListLoading = () => {
@@ -7,7 +7,7 @@ export const TicketListLoading = () => {
       <div className={styles.header}>
         <h2 className={styles.heading}>Fila de trabalho</h2>
       </div>
-      <Spinner size="sm" centered label="Buscando chamados..." />
+      <LoadingState size="sm" label="Buscando chamados..." />
     </div>
   );
 };

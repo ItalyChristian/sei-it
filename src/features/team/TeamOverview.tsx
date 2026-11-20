@@ -3,7 +3,7 @@
 import { useTickets } from "@/entities/ticket/useTickets";
 import { useUsers } from "@/entities/user/useUsers";
 import { KpiGrid, KpiItem } from "@/features/team/components/Kpi/KpiGrid";
-import { Spinner } from "@/shared/components/Spinner";
+import { LoadingState } from "@/shared/components/LoadingState";
 import { useManagerKpis } from "./hooks/useManagerKpis";
 import { useTeamScope } from "./hooks/useTeamScope";
 import { cardContainer } from "./styles/styles.css";
@@ -27,7 +27,7 @@ export function TeamOverview() {
     return <div>Não foi possível carregar os dados da equipe.</div>;
   }
   if (isLoadingTickets || isLoadingUsers) {
-    return <Spinner label="Carregando dados da equipe..." />;
+    return <LoadingState label="Carregando dados da equipe..." />;
   }
 
   const managerKpis: KpiItem[] = [

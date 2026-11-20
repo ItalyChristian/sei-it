@@ -4,7 +4,7 @@ import { MessageWithAuthor } from "@/entities/chat/message.types";
 import { useMessages } from "@/entities/chat/useMessages";
 import { Ticket } from "@/entities/ticket/ticket.types";
 import { User } from "@/entities/user/user.types";
-import { Spinner } from "@/shared/components/Spinner";
+import { LoadingState } from "@/shared/components/LoadingState";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -55,9 +55,7 @@ export function ChatPanel({ ticket, users }: ChatPanelProps) {
           onAssume={() => {}}
           isAssuming={false}
         />
-        <div style={{ flex: 1, display: "flex" }}>
-          <Spinner size="md" centered label="Carregando conversa..." />
-        </div>
+        <LoadingState size="md" label="Carregando conversa..." />
       </div>
     );
   }

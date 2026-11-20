@@ -4,6 +4,8 @@ import { priorityBadge, priorityLabels } from "@/entities/sla/sla-priority-map";
 import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import type { Ticket } from "@/entities/ticket/ticket.types";
+import { EmptyState } from "@/shared/components/EmptyState";
+import { LoadingState } from "@/shared/components/LoadingState";
 import { dataTable } from "@/shared/styles/components/datatable.css";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -95,9 +97,18 @@ export function TicketsTable({
         className={dataTable}
         currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} chamados"
         dataKey="id"
-        emptyMessage="Nenhum chamado encontrado."
+        emptyMessage={
+          <EmptyState description="Nenhum chamado encontrado." />
+        }
         first={first}
         loading={isLoading}
+        loadingIcon={
+          <LoadingState
+            centered={false}
+            label="Carregando chamados..."
+            size="sm"
+          />
+        }
         onPage={(event) => setFirst(event.first)}
         paginator
         paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"

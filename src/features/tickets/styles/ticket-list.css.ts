@@ -136,7 +136,6 @@ export const loading = style({
 });
 
 export const empty = style({
-  padding: "24px",
   color: colors.textMuted,
   fontSize: "13px",
   fontStyle: "italic",

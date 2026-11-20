@@ -8,6 +8,7 @@ import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { useMemo, useState } from "react";
 import { UnreadDot } from "../../chat/components/UnreadDot/UnreadDot";
 import * as styles from "../styles/ticket-list.css";
+import { TicketListEmptyState } from "./EmptyState";
 import { snippet } from "../trim-description";
 import { TicketListLoading } from "./TicketListLoading";
 
@@ -96,7 +97,7 @@ export function TicketList({
 
       <div className={styles.list}>
         {filtered.length === 0 ? (
-          <p className={styles.empty}>Nenhum chamado neste filtro.</p>
+          <TicketListEmptyState />
         ) : (
           filtered.map((ticket) => {
             const isActive = ticket.id === selectedTicketId;

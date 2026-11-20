@@ -1,19 +1,19 @@
 "use client";
 
 import { MessageSquare } from "lucide-react";
+import { EmptyState } from "@/shared/components/EmptyState";
 import * as styles from "./chat-area.css";
 
 export function ChatPanelEmptyState() {
   return (
-    <div className={styles.emptyState}>
-      <div className={styles.emptyIcon}>
-        <MessageSquare size={48} />
-      </div>
-      <h2 className={styles.emptyTitle}>Selecione um chamado</h2>
-      <p className={styles.emptyDescription}>
-        Escolha um chamado na lista à esquerda para visualizar a conversa e
-        responder.
-      </p>
-    </div>
+    <EmptyState
+      icon={<MessageSquare size={48} />}
+      title="Selecione um chamado"
+      description="Escolha um chamado na lista à esquerda para visualizar a conversa e responder."
+      className={styles.emptyState}
+      iconClassName={styles.emptyIcon}
+      titleClassName={styles.emptyTitle}
+      descriptionClassName={styles.emptyDescription}
+    />
   );
 }

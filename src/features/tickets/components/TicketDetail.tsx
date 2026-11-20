@@ -8,7 +8,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Spinner } from "@/shared/components/Spinner";
+import { LoadingState } from "@/shared/components/LoadingState";
 import { useEffect } from "react";
 import * as styles from "../styles/ticket-detail.css";
 
@@ -38,7 +38,7 @@ export const TicketDetail = ({ id }: TicketDetailProps) => {
   if (isLoadingAuth || isLoadingTickets || isLoadingUsers) {
     return (
       <div className={styles.page}>
-        <Spinner size="lg" centered label="Carregando chamado..." />
+        <LoadingState size="lg" label="Carregando chamado..." />
       </div>
     );
   }

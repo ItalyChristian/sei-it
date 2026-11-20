@@ -1,12 +1,12 @@
 "use client";
 
 import { MessageWithAuthor } from "@/entities/chat/message.types";
+import { EmptyState } from "@/shared/components/EmptyState";
+import { LoadingState } from "@/shared/components/LoadingState";
 import { useAuth } from "@/shared/contexts/session.context";
 import { formatInTimeZone } from "date-fns-tz";
 import { useEffect, useMemo, useRef } from "react";
 import { MessageBubble } from "../MessageBubble/MessageBubble";
-import { ChatEmptyState } from "./ChatEmptyState";
-import { MessageListLoading } from "./MessageListLoading";
 import * as styles from "./message-list.css";
 
 interface MessageListProps {
@@ -56,11 +56,13 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
   }, [messages, user?.zoneinfo]);
 
   if (isLoading) {
-    return <MessageListLoading />;
+    return <LoadingState size="sm" label="Carregando mensagens..." />;
   }
 
   if (messages.length === 0) {
-    return <ChatEmptyState />;
+    return (
+      <EmptyState description="Nenhuma mensagem ainda. Envie a primeira!" />
+    );
   }
 
   return (

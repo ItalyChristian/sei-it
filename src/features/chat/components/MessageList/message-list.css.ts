@@ -9,7 +9,6 @@ export const list = style({
   overflowY: "auto",
   flex: 1,
 });
-
 export const group = style({
   display: "flex",
   flexDirection: "column",
@@ -32,23 +31,4 @@ export const dateDivider = style({
       background: colors.border,
     },
   },
-});
-
-export const loading = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flex: 1,
-  color: colors.textMuted,
-  fontSize: "14px",
-});
-
-export const empty = style({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flex: 1,
-  color: colors.textMuted,
-  fontSize: "14px",
-  fontStyle: "italic",
 });

@@ -2,7 +2,7 @@
 
 import { useTickets } from "@/entities/ticket/useTickets";
 import { KpiGrid, KpiItem } from "@/features/team/components/Kpi/KpiGrid";
-import { Spinner } from "@/shared/components/Spinner";
+import { LoadingState } from "@/shared/components/LoadingState";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useOperatorKpis } from "./hooks/useOperatorKpis";
 
@@ -12,7 +12,7 @@ export function OperatorOverview() {
 
   const kpis = useOperatorKpis(tickets, user?.id ?? "");
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <LoadingState label="Carregando chamados..." />;
 
   const operatorKpis: KpiItem[] = [
     { title: "Meus Chamados Ativos", value: kpis.meusAtivos, tone: "info" },
