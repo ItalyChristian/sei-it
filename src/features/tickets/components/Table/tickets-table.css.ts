@@ -13,6 +13,13 @@ export const ticketCell = style({
   flexDirection: "column",
   gap: "4px",
   minWidth: "220px",
+
+  color: "inherit",
+  textDecoration: "none",
+  cursor: "pointer",
+  ":hover": {
+    textDecoration: "underline",
+  },
 });
 
 export const ticketTitle = style({
