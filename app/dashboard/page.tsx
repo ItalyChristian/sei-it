@@ -5,6 +5,7 @@ import { useAuth } from "@/shared/contexts/session.context";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+import { Spinner } from "@/shared/components/Spinner";
 import ClientView from "./_views/ClientView";
 import ManagerView from "./_views/ManagerView";
 import OperatorView from "./_views/OperatorView";
@@ -22,7 +23,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Carregando...
+        <Spinner size="lg" />
       </div>
     );
   }
