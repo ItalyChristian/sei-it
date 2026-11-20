@@ -12,7 +12,11 @@ import * as styles from "./styles/ticket-list-shell.css";
 export function TicketListShell() {
   const { user } = useAuth();
 
-  const { data: tickets = [], isLoading: isLoadingTickets } = useTickets();
+  const {
+    data: tickets = [],
+    isLoading: isLoadingTickets,
+    isPending,
+  } = useTickets();
   const { data: users = [], isLoading: isLoadingUsers } = useUsers();
 
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
@@ -35,7 +39,7 @@ export function TicketListShell() {
     [myTickets, selectedTicketId],
   );
 
-  const isLoading = isLoadingTickets || isLoadingUsers;
+  const isLoading = isLoadingTickets || isPending;
 
   return (
     <div className={styles.shell}>

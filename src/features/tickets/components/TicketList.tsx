@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import { UnreadDot } from "../../chat/components/UnreadDot";
 import * as styles from "../styles/ticket-list.css";
 import { snippet } from "../trim-description";
+import { TicketListLoading } from "./TicketListLoading";
 
 type FilterType = "mine" | "unassigned" | "overdue";
 
@@ -61,7 +62,7 @@ export function TicketList({
   }, [tickets, filter, user?.id, now]);
 
   if (isLoading) {
-    return <div className={styles.loading}>Carregando chamados...</div>;
+    return <TicketListLoading />;
   }
 
   return (

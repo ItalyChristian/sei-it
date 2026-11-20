@@ -4,6 +4,8 @@ import { MessageWithAuthor } from "@/entities/chat/message.types";
 import { useAuth } from "@/shared/contexts/session.context";
 import { formatInTimeZone } from "date-fns-tz";
 import { useEffect, useMemo, useRef } from "react";
+import { ChatEmptyState } from "../ChatEmptyState";
+import { ChatLoading } from "../ChatLoading";
 import * as styles from "../styles/message-list.css";
 import { MessageBubble } from "./MessageBubble";
 
@@ -54,15 +56,11 @@ export function MessageList({ messages, isLoading }: MessageListProps) {
   }, [messages, user?.zoneinfo]);
 
   if (isLoading) {
-    return <div className={styles.loading}>Carregando mensagens...</div>;
+    return <ChatLoading />;
   }
 
   if (messages.length === 0) {
-    return (
-      <div className={styles.empty}>
-        Nenhuma mensagem ainda. Envie a primeira!
-      </div>
-    );
+    return <ChatEmptyState />;
   }
 
   return (
