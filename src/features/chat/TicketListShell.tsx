@@ -4,7 +4,6 @@ import { useTickets } from "@/entities/ticket/useTickets";
 import { useUsers } from "@/entities/user/useUsers";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
-import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { useMemo, useState } from "react";
 import { TicketList } from "../tickets/TicketList";
 import { ChatArea } from "./ChatArea";
@@ -12,7 +11,7 @@ import * as styles from "./styles/ticket-list-shell.css";
 
 export function TicketListShell() {
   const { user } = useAuth();
-  const { date: referenceDate } = useReferenceDate();
+
   const { data: tickets = [], isLoading: isLoadingTickets } = useTickets();
   const { data: users = [], isLoading: isLoadingUsers } = useUsers();
 

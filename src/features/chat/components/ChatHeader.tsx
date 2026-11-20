@@ -5,7 +5,6 @@ import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import { Ticket } from "@/entities/ticket/ticket.types";
 import { User } from "@/entities/user/user.types";
-import { useAuth } from "@/shared/contexts/session.context";
 import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { formatInTimeZone } from "date-fns-tz";
 import { CheckCircle2, Clock, Info, User as UserIcon } from "lucide-react";
@@ -25,7 +24,6 @@ export function ChatHeader({
   onAssume,
   isAssuming,
 }: ChatHeaderProps) {
-  const { user } = useAuth();
   const { timezone } = useReferenceDate();
 
   const responsavel = useMemo(
