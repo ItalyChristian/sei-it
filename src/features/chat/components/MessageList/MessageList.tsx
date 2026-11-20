@@ -4,10 +4,10 @@ import { MessageWithAuthor } from "@/entities/chat/message.types";
 import { useAuth } from "@/shared/contexts/session.context";
 import { formatInTimeZone } from "date-fns-tz";
 import { useEffect, useMemo, useRef } from "react";
-import { ChatEmptyState } from "../ChatEmptyState";
-import { ChatLoading } from "../ChatLoading";
-import * as styles from "../styles/message-list.css";
-import { MessageBubble } from "./MessageBubble";
+import { MessageBubble } from "../MessageBubble/MessageBubble";
+import { ChatEmptyState } from "./ChatEmptyState";
+import { ChatLoading } from "./ChatLoading";
+import * as styles from "./message-list.css";
 
 interface MessageListProps {
   messages: MessageWithAuthor[];

@@ -4,7 +4,7 @@ import { MessageWithAuthor } from "@/entities/chat/message.types";
 import { useAuth } from "@/shared/contexts/session.context";
 import { formatInTimeZone } from "date-fns-tz";
 import { Lock } from "lucide-react";
-import * as styles from "../styles/message-bubble.css";
+import * as styles from "./message-bubble.css";
 
 interface MessageBubbleProps {
   message: MessageWithAuthor;

@@ -6,10 +6,10 @@ import { useAuth } from "@/shared/contexts/session.context";
 import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
 import { useMemo, useState } from "react";
 import { TicketList } from "../tickets/components/TicketList";
-import { ChatArea } from "./ChatArea";
-import * as styles from "./styles/ticket-list-shell.css";
+import * as styles from "./chat-area-shell.css";
+import { ChatArea } from "./components/ChatArea/ChatArea";
 
-export function TicketListShell() {
+export function ChatAreaShell() {
   const { user } = useAuth();
 
   const {

@@ -5,7 +5,7 @@ import { usePostMessage } from "@/entities/chat/useMessages";
 import { useAuth } from "@/shared/contexts/session.context";
 import { Lock, Send } from "lucide-react";
 import { useState } from "react";
-import * as styles from "../styles/message-composer.css";
+import * as styles from "./message-composer.css";
 
 interface MessageComposerProps {
   ticketId: string;

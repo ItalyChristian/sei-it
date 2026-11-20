@@ -1,6 +1,6 @@
 "use client";
 
-import * as styles from "../styles/unread-dot.css";
+import * as styles from "./unread-dot.css";
 
 interface UnreadDotProps {
   visible: boolean;

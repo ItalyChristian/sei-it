@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageSquare } from "lucide-react";
-import * as styles from "./styles/chat-area.css";
+import * as styles from "./chat-area.css";
 
 export function ChatPanelEmptyState() {
   return (

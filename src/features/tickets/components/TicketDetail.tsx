@@ -2,7 +2,7 @@
 
 import { useTickets } from "@/entities/ticket/useTickets";
 import { useUsers } from "@/entities/user/useUsers";
-import { ChatPanel } from "@/features/chat/components/ChatPanel";
+import { ChatPanel } from "@/features/chat/components/ChatPanel/ChatPanel";
 import { useAuth } from "@/shared/contexts/session.context";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";

@@ -9,10 +9,10 @@ import { useAuth } from "@/shared/contexts/session.context";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import * as styles from "../styles/chat-panel.css";
-import { ChatHeader } from "./ChatHeader";
-import { MessageComposer } from "./MessageComposer";
-import { MessageList } from "./MessageList";
+import { ChatHeader } from "../ChatHeader/ChatHeader";
+import { MessageComposer } from "../MessageComposer/MessageComposer";
+import { MessageList } from "../MessageList/MessageList";
+import * as styles from "./chat-panel.css";
 
 interface ChatPanelProps {
   ticket: Ticket;

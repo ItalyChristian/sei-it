@@ -1,7 +1,7 @@
 import { Ticket } from "@/entities/ticket/ticket.types";
 import { User } from "@/entities/user/user.types";
+import { ChatPanel } from "../ChatPanel/ChatPanel";
 import { ChatPanelEmptyState } from "./ChatPanelEmptyState";
-import { ChatPanel } from "./components/ChatPanel";
 
 interface ChatAreaProps {
   selectedTicket: Ticket | null;

@@ -6,7 +6,7 @@ import { Ticket } from "@/entities/ticket/ticket.types";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { useMemo, useState } from "react";
-import { UnreadDot } from "../../chat/components/UnreadDot";
+import { UnreadDot } from "../../chat/components/UnreadDot/UnreadDot";
 import * as styles from "../styles/ticket-list.css";
 import { snippet } from "../trim-description";
 import { TicketListLoading } from "./TicketListLoading";

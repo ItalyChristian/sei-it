@@ -1,5 +1,5 @@
-import { TicketListShell } from "@/features/chat/TicketListShell";
+import { ChatAreaShell } from "@/features/chat/ChatAreaShell";
 
 export default function Chat() {
-  return <TicketListShell />;
+  return <ChatAreaShell />;
 }

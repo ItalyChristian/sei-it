@@ -9,7 +9,7 @@ import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { formatInTimeZone } from "date-fns-tz";
 import { CheckCircle2, Clock, Info, User as UserIcon } from "lucide-react";
 import { useMemo } from "react";
-import * as styles from "../styles/chat-header.css";
+import * as styles from "./chat-header.css";
 
 interface ChatHeaderProps {
   ticket: Ticket;
