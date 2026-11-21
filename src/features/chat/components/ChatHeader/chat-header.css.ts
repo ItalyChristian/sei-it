@@ -1,6 +1,12 @@
 import { colors } from "@/shared/styles/colors.css";
 import { radii } from "@/shared/styles/sizes.css";
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
+
+const typingPulse = keyframes({
+  "0%, 20%": { opacity: 0.25 },
+  "50%": { opacity: 1 },
+  "80%, 100%": { opacity: 0.25 },
+});
 
 export const header = style({
   width: "100%",
@@ -46,6 +52,20 @@ export const title = style({
   fontWeight: 700,
   letterSpacing: "-0.5px",
   margin: 0,
+});
+
+export const typingIndicator = style({
+  color: colors.primary,
+  fontSize: "12px",
+  fontWeight: 600,
+  selectors: {
+    "&::after": {
+      content: '"..."',
+      display: "inline-block",
+      width: "18px",
+      animation: `${typingPulse} 1.2s ease-in-out infinite`,
+    },
+  },
 });
 
 export const actions = style({

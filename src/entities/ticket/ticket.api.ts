@@ -6,6 +6,18 @@ export function getTickets() {
   return http<Ticket[]>("/tickets");
 }
 
+export function createTicket(input: {
+  title: string;
+  description: string;
+  categoryId: string;
+  requesterId: string;
+}) {
+  return http<Ticket>("/tickets", {
+    method: "POST",
+    data: input,
+  });
+}
+
 export function updateTicketStatus(
   ticketId: string,
   status: SlaStatus,
