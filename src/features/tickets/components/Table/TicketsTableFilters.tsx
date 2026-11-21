@@ -97,6 +97,21 @@ export function TicketsTableFilters({
         </Select.Root>
       )}
 
+      {showPriorityFilter && (
+        <Select.Root
+          ariaLabel="Filtrar por prioridade"
+          value={priorityOptions.toSelectValue(priority)}
+          onChange={(value) =>
+            onPriorityChange(priorityOptions.fromSelectValue(value))
+          }
+          placeholder="Todas as prioridades"
+          showClear={priority !== null}
+          onClear={() => onPriorityChange(null)}
+        >
+          <Select.Content options={priorityOptions.options} />
+        </Select.Root>
+      )}
+
       <Select.Root
         ariaLabel="Filtrar por status"
         value={statusFilter.toSelectValue(status)}
@@ -120,21 +135,6 @@ export function TicketsTableFilters({
       >
         <Select.Content options={slaOptions.options} />
       </Select.Root>
-
-      {showPriorityFilter && (
-        <Select.Root
-          ariaLabel="Filtrar por prioridade"
-          value={priorityOptions.toSelectValue(priority)}
-          onChange={(value) =>
-            onPriorityChange(priorityOptions.fromSelectValue(value))
-          }
-          placeholder="Todas as prioridades"
-          showClear={priority !== null}
-          onClear={() => onPriorityChange(null)}
-        >
-          <Select.Content options={priorityOptions.options} />
-        </Select.Root>
-      )}
     </div>
   );
 }
