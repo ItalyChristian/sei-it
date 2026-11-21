@@ -17,4 +17,20 @@ export const btnPrimary = style({
   ":hover": {
     backgroundColor: colors.primaryHover,
   },
+  ":disabled": {
+    opacity: 0.5,
+    cursor: "not-allowed",
+  },
 });
+
+// export const submit = style({
+//   border: "none",
+//   borderRadius: radii.md,
+//   padding: "8px 12px",
+//   color: "white",
+//   background: colors.primary,
+//   fontSize: "12px",
+//   fontWeight: 600,
+//   cursor: "pointer",
+
+// });

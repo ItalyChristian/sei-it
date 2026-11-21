@@ -1,10 +1,11 @@
 "use client";
 
-import { slaStatusOptions } from "@/entities/sla/sla-status-options-map";
-import { SlaPriority } from "@/entities/sla/sla-priority.types";
 import { priorityLabels } from "@/entities/sla/sla-priority-map";
+import { SlaPriority } from "@/entities/sla/sla-priority.types";
+import { slaStatusOptions } from "@/entities/sla/sla-status-options-map";
 import { TicketSlaFilterValue } from "@/entities/sla/ticket-sla";
 import { Select, withAllOption } from "@/shared/components/Select";
+import { searchInput } from "@/shared/styles/components/input.css";
 import { InputText } from "primereact/inputtext";
 import { TicketsTableFiltersProps } from "./filters.types";
 import * as styles from "./tickets-table-filters.css";
@@ -65,7 +66,7 @@ export function TicketsTableFilters({
     <div className={styles.toolbar}>
       <InputText
         aria-label="Buscar chamados"
-        className={styles.searchInput}
+        className={searchInput}
         onChange={(event) => onSearchChange(event.target.value)}
         placeholder="Buscar chamados..."
         value={search}

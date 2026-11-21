@@ -4,9 +4,12 @@ import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { statusLabel } from "@/entities/ticket/ticket-status-map";
 import { useUpdateTicketStatus } from "@/entities/ticket/useTickets";
 import { UserRole } from "@/entities/user/user-roles.enum";
-import { useAuth } from "@/shared/contexts/session.context";
 import { Select } from "@/shared/components/Select";
-import { Button, TextField } from "@radix-ui/themes";
+import { useAuth } from "@/shared/contexts/session.context";
+import { btnPrimary } from "@/shared/styles/components/buttons.css";
+import { searchInput } from "@/shared/styles/components/input.css";
+import { Button } from "@radix-ui/themes";
+import { InputText } from "primereact/inputtext";
 import { FormEvent, useState } from "react";
 import * as styles from "./ticket-status-control.css";
 
@@ -44,7 +47,6 @@ export function TicketStatusControl({
       <span className={styles.label}>Alterar status</span>
       <Select.Root
         ariaLabel="Alterar status"
-        className={styles.select}
         onChange={(value) => {
           const selected = Object.values(SlaStatus).find(
             (statusOption) => statusOption === value,
@@ -60,15 +62,18 @@ export function TicketStatusControl({
           }))}
         />
       </Select.Root>
-      <TextField.Root
+
+      <InputText
         aria-label="Motivo da alteração do status"
-        className={styles.reason}
+        className={searchInput}
         onChange={(event) => setReason(event.target.value)}
         placeholder="Motivo obrigatório"
         value={reason}
       />
+
       <Button
-        className={styles.submit}
+        className={btnPrimary}
+        style={{ padding: "24px 32px" }}
         disabled={
           mutation.isPending || !reason.trim() || status === currentStatus
         }
