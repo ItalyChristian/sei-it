@@ -5,7 +5,8 @@ import { usePostMessage } from "@/entities/chat/useMessages";
 import { UserRole } from "@/entities/user/user-roles.enum";
 import { useAuth } from "@/shared/contexts/session.context";
 import { Lock, Send } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { websocketMock } from "@/shared/lib/websocket-mock";
 import * as styles from "./message-composer.css";
 
 interface MessageComposerProps {
@@ -16,15 +17,51 @@ export function MessageComposer({ ticketId }: MessageComposerProps) {
   const { user } = useAuth();
   const [content, setContent] = useState("");
   const [type, setType] = useState<MessageType>("public");
+  const typingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const mutation = usePostMessage(ticketId);
   const isClient = user?.perfil === UserRole.CLIENT;
+
+  const publishTyping = useCallback((digitando: boolean) => {
+    if (!user) return;
+    websocketMock.publish({
+      tipo: "usuario.digitando",
+      payload: {
+        ticket_id: ticketId,
+        usuario_id: user.id,
+        nome: user.nome,
+        perfil: user.perfil,
+        digitando,
+      },
+    });
+  }, [ticketId, user]);
+
+  const handleContentChange = (value: string) => {
+    setContent(value);
+    if (typingTimeout.current) clearTimeout(typingTimeout.current);
+    if (!value.trim()) {
+      publishTyping(false);
+      return;
+    }
+
+    publishTyping(true);
+    typingTimeout.current = setTimeout(() => publishTyping(false), 1500);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+      publishTyping(false);
+    };
+  }, [publishTyping]);
 
   const handleSubmit = async () => {
     const trimmed = content.trim();
     if (!trimmed || !user) return;
 
     try {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+      publishTyping(false);
       await mutation.mutateAsync({
         content: trimmed,
         type: isClient ? "public" : type,
@@ -74,10 +111,12 @@ export function MessageComposer({ ticketId }: MessageComposerProps) {
           placeholder={
             isInternal
               ? "Escreva uma nota interna (só a equipe vê)..."
-              : "Escreva sua resposta ao cliente..."
+              : isClient
+                ? "Escreva uma mensagem para a equipe..."
+                : "Escreva uma resposta ao cliente..."
           }
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => handleContentChange(e.target.value)}
           onKeyDown={handleKeyDown}
           rows={2}
           disabled={mutation.isPending}
