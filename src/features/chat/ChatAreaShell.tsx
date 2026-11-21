@@ -1,6 +1,7 @@
 "use client";
 
 import { useTickets } from "@/entities/ticket/useTickets";
+import { getTicketsVisibleToUser } from "@/entities/ticket/ticket-access";
 import { useUsers } from "@/entities/user/useUsers";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
@@ -17,7 +18,7 @@ export function ChatAreaShell() {
     isLoading: isLoadingTickets,
     isPending,
   } = useTickets();
-  const { data: users = [], isLoading: isLoadingUsers } = useUsers();
+  const { data: users = [] } = useUsers();
 
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
 
@@ -29,9 +30,7 @@ export function ChatAreaShell() {
 
   const myTickets = useMemo(() => {
     if (!user) return tickets;
-    return tickets.filter(
-      (t) => t.responsavel_id === user.id || !t.responsavel_id,
-    );
+    return getTicketsVisibleToUser(tickets, user);
   }, [tickets, user]);
 
   const selectedTicket = useMemo(
@@ -51,7 +50,11 @@ export function ChatAreaShell() {
         isLoading={isLoading}
       />
 
-      <ChatArea selectedTicket={selectedTicket} users={users} />
+      <ChatArea
+        selectedTicket={selectedTicket}
+        users={users}
+        onBackToQueue={() => setSelectedTicketId(null)}
+      />
     </div>
   );
 }

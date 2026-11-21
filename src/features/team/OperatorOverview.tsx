@@ -10,7 +10,7 @@ export function OperatorOverview() {
   const { user } = useAuth();
   const { data: tickets = [], isLoading } = useTickets();
 
-  const kpis = useOperatorKpis(tickets, user?.id ?? "");
+  const kpis = useOperatorKpis(tickets, user);
 
   if (isLoading) return <LoadingState label="Carregando chamados..." />;
 

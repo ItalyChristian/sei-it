@@ -6,12 +6,23 @@ import { ChatPanelEmptyState } from "./ChatPanelEmptyState";
 interface ChatAreaProps {
   selectedTicket: Ticket | null;
   users: User[];
+  onBackToQueue: () => void;
 }
 
-export function ChatArea({ selectedTicket, users }: ChatAreaProps) {
+export function ChatArea({
+  selectedTicket,
+  users,
+  onBackToQueue,
+}: ChatAreaProps) {
   if (!selectedTicket) {
     return <ChatPanelEmptyState />;
   }
 
-  return <ChatPanel ticket={selectedTicket} users={users} />;
+  return (
+    <ChatPanel
+      ticket={selectedTicket}
+      users={users}
+      onBackToQueue={onBackToQueue}
+    />
+  );
 }

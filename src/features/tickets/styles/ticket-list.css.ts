@@ -27,6 +27,19 @@ export const heading = style({
   color: colors.textDark,
 });
 
+export const search = style({
+  width: "100%",
+  padding: "9px 12px",
+  border: `1px solid ${colors.border}`,
+  borderRadius: radii.md,
+  color: colors.textDark,
+  fontSize: "13px",
+  outline: "none",
+  ":focus": {
+    borderColor: colors.primary,
+  },
+});
+
 export const pills = style({
   display: "flex",
   gap: "6px",

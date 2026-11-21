@@ -1,7 +1,7 @@
-import { TicketList } from "@/features/tickets/components/TicketList";
 import { btnPrimary } from "@/shared/styles/components/buttons.css";
 import { Button } from "@radix-ui/themes";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import * as styles from "./styles.css";
 
 export const SideBar = () => {
@@ -22,7 +22,9 @@ export const SideBar = () => {
         </Button>
       </div>
 
-      <TicketList />
+      <Link href="/chat" className={styles.queueLink}>
+        Pesquisar e atender chamados
+      </Link>
     </aside>
   );
 };

@@ -1,9 +1,11 @@
 "use client";
 
 import { useTickets } from "@/entities/ticket/useTickets";
+import { canUserAccessTicket } from "@/entities/ticket/ticket-access";
 import { useUsers } from "@/entities/user/useUsers";
 import { ChatPanel } from "@/features/chat/components/ChatPanel/ChatPanel";
 import { useAuth } from "@/shared/contexts/session.context";
+import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -19,6 +21,7 @@ interface TicketDetailProps {
 export const TicketDetail = ({ id }: TicketDetailProps) => {
   const router = useRouter();
   const { user, isLoading: isLoadingAuth } = useAuth();
+  useRealtimeEvents();
 
   const { data: tickets = [], isLoading: isLoadingTickets } = useTickets();
   const { data: users = [], isLoading: isLoadingUsers } = useUsers();
@@ -43,11 +46,11 @@ export const TicketDetail = ({ id }: TicketDetailProps) => {
     );
   }
 
-  if (!ticket) {
+  if (!ticket || !canUserAccessTicket(ticket, user)) {
     return (
       <div className={styles.notFound}>
-        <h1>Chamado não encontrado</h1>
-        <p>O chamado que você está procurando não existe ou foi removido.</p>
+        <h1>Chamado indisponível</h1>
+        <p>O chamado não existe ou não está disponível para este perfil.</p>
         <Link href="/chat" className={styles.backLink}>
           <ArrowLeft size={16} />
           Voltar para a fila
@@ -58,13 +61,6 @@ export const TicketDetail = ({ id }: TicketDetailProps) => {
 
   return (
     <div className={styles.page}>
-      <div className={styles.topBar}>
-        <Link href="/chat" className={styles.backLink}>
-          <ArrowLeft size={16} />
-          Voltar para a fila
-        </Link>
-      </div>
-
       <div className={styles.content}>
         <ChatPanel ticket={ticket} users={users} />
       </div>

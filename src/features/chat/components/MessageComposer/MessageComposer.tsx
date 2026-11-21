@@ -2,6 +2,7 @@
 
 import { MessageType } from "@/entities/chat/message.types";
 import { usePostMessage } from "@/entities/chat/useMessages";
+import { UserRole } from "@/entities/user/user-roles.enum";
 import { useAuth } from "@/shared/contexts/session.context";
 import { Lock, Send } from "lucide-react";
 import { useState } from "react";
@@ -17,6 +18,7 @@ export function MessageComposer({ ticketId }: MessageComposerProps) {
   const [type, setType] = useState<MessageType>("public");
 
   const mutation = usePostMessage(ticketId);
+  const isClient = user?.perfil === UserRole.CLIENT;
 
   const handleSubmit = async () => {
     const trimmed = content.trim();
@@ -25,7 +27,7 @@ export function MessageComposer({ ticketId }: MessageComposerProps) {
     try {
       await mutation.mutateAsync({
         content: trimmed,
-        type,
+        type: isClient ? "public" : type,
         authorId: user.id,
       });
       setContent("");
@@ -46,21 +48,23 @@ export function MessageComposer({ ticketId }: MessageComposerProps) {
 
   return (
     <div className={styles.composer}>
-      <div className={styles.toolbar}>
-        <button
-          type="button"
-          className={`${styles.toggle} ${isInternal ? styles.toggleActive : ""}`}
-          onClick={() => setType(isInternal ? "public" : "internal")}
-          title={
-            isInternal
-              ? "Desativar nota interna (visível ao cliente)"
-              : "Ativar nota interna (não visível ao cliente)"
-          }
-        >
-          <Lock size={14} />
-          {isInternal ? "Nota interna" : "Mensagem pública"}
-        </button>
-      </div>
+      {!isClient && (
+        <div className={styles.toolbar}>
+          <button
+            type="button"
+            className={`${styles.toggle} ${isInternal ? styles.toggleActive : ""}`}
+            onClick={() => setType(isInternal ? "public" : "internal")}
+            title={
+              isInternal
+                ? "Desativar nota interna (visível ao cliente)"
+                : "Ativar nota interna (não visível ao cliente)"
+            }
+          >
+            <Lock size={14} />
+            {isInternal ? "Nota interna" : "Mensagem pública"}
+          </button>
+        </div>
+      )}
 
       <div
         className={`${styles.inputRow} ${isInternal ? styles.inputRowInternal : ""}`}

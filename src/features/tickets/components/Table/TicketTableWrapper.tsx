@@ -3,6 +3,7 @@
 import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { useCategories } from "@/entities/ticket/category/useCategories";
 import { useTickets } from "@/entities/ticket/useTickets";
+import { getTicketsVisibleToUser } from "@/entities/ticket/ticket-access";
 import { useUsers } from "@/entities/user/useUsers";
 import { useAuth } from "@/shared/contexts/session.context";
 import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
@@ -34,18 +35,10 @@ export function TicketsTableWrapper({
     isError: isUsersError,
   } = useUsers();
 
-  if (isTicketsError || isCategoriesError || isUsersError) {
-    return (
-      <p className={errorState} role="alert">
-        Não foi possível carregar os chamados.
-      </p>
-    );
-  }
-
   const scopedTickets = useMemo(() => {
     switch (initialFilter) {
       case "mine":
-        return tickets.filter((t) => t.responsavel_id === user?.id);
+        return user ? getTicketsVisibleToUser(tickets, user) : [];
       case "unassigned":
         return tickets.filter((t) => !t.responsavel_id);
       case "sla-at-risk":
@@ -64,7 +57,15 @@ export function TicketsTableWrapper({
       default:
         return tickets;
     }
-  }, [tickets, initialFilter, user?.id]);
+  }, [tickets, initialFilter, user, referenceDateObj]);
+
+  if (isTicketsError || isCategoriesError || isUsersError) {
+    return (
+      <p className={errorState} role="alert">
+        Não foi possível carregar os chamados.
+      </p>
+    );
+  }
 
   return (
     <TicketsTable

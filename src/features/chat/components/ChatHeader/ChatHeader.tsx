@@ -4,7 +4,10 @@ import { priorityBadge, priorityLabels } from "@/entities/sla/sla-priority-map";
 import { SlaStatus } from "@/entities/sla/sla-status.types";
 import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import { Ticket } from "@/entities/ticket/ticket.types";
+import { UserRole } from "@/entities/user/user-roles.enum";
 import { User } from "@/entities/user/user.types";
+import { useAuth } from "@/shared/contexts/session.context";
+import { TicketStatusControl } from "./TicketStatusControl";
 import { useReferenceDate } from "@/shared/hooks/useReferenceDate";
 import { formatInTimeZone } from "date-fns-tz";
 import { CheckCircle2, Clock, Info, User as UserIcon } from "lucide-react";
@@ -24,6 +27,7 @@ export function ChatHeader({
   onAssume,
   isAssuming,
 }: ChatHeaderProps) {
+  const { user } = useAuth();
   const { timezone } = useReferenceDate();
 
   const responsavel = useMemo(
@@ -55,15 +59,17 @@ export function ChatHeader({
             <span className={statusBadge[ticket.status]}>
               {statusLabel[ticket.status]}
             </span>
-            <span className={priorityBadge[ticket.prioridade]}>
-              {priorityLabels[ticket.prioridade]}
-            </span>
+            {user?.perfil !== UserRole.CLIENT && (
+              <span className={priorityBadge[ticket.prioridade]}>
+                {priorityLabels[ticket.prioridade]}
+              </span>
+            )}
           </div>
           <h1 className={styles.title}>{ticket.titulo}</h1>
         </div>
 
         <div className={styles.actions}>
-          {isUnassigned && !isClosed && (
+          {user?.perfil === UserRole.OPERATOR && isUnassigned && !isClosed && (
             <button
               type="button"
               className={styles.assumeButton}
@@ -76,6 +82,12 @@ export function ChatHeader({
           )}
         </div>
       </div>
+
+      <TicketStatusControl
+        key={`${ticket.id}-${ticket.status}`}
+        ticketId={ticket.id}
+        status={ticket.status}
+      />
 
       <div className={styles.info}>
         <span className={styles.infoItem}>

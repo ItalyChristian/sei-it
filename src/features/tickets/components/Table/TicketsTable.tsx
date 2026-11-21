@@ -23,6 +23,7 @@ export function TicketsTable({
   categories,
   referenceDate,
   isLoading,
+  variant,
 }: TicketsTableProps) {
   const [search, setSearch] = useState("");
   const [responsibleId, setResponsibleId] = useState<string | null>(null);
@@ -91,6 +92,7 @@ export function TicketsTable({
         responsibleOptions={responsibleOptions}
         search={search}
         status={status}
+        showResponsibleFilter={variant === "manager"}
       />
 
       <DataTable
@@ -133,6 +135,7 @@ export function TicketsTable({
               categoryName={
                 categoryNames.get(ticket.categoria_id) ?? "Sem categoria"
               }
+              showCategory={variant !== "client"}
               ticket={ticket}
             />
           )}
@@ -140,21 +143,28 @@ export function TicketsTable({
         />
         <Column
           field="responsavel_id"
-          header="Responsável"
-          body={(ticket: Ticket) =>
-            userNames.get(ticket.responsavel_id ?? "") ?? "Não atribuído"
-          }
+          header={variant === "client" ? "Atendente" : "Responsável"}
+          body={(ticket: Ticket) => {
+            const responsible =
+              userNames.get(ticket.responsavel_id ?? "");
+            if (variant === "client") {
+              return responsible ?? "Aguardando atendimento";
+            }
+            return responsible ?? "Não atribuído";
+          }}
         />
-        <Column
-          field="prioridade"
-          header="Prioridade"
-          body={(ticket: Ticket) => (
-            <span className={priorityBadge[ticket.prioridade]}>
-              {priorityLabels[ticket.prioridade]}
-            </span>
-          )}
-          sortable
-        />
+        {variant !== "client" && (
+          <Column
+            field="prioridade"
+            header="Prioridade"
+            body={(ticket: Ticket) => (
+              <span className={priorityBadge[ticket.prioridade]}>
+                {priorityLabels[ticket.prioridade]}
+              </span>
+            )}
+            sortable
+          />
+        )}
 
         <Column
           field="status"

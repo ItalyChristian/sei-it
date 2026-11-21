@@ -14,6 +14,7 @@ export function TicketsTableFilters({
   onSearchChange,
   onResponsibleChange,
   onStatusChange,
+  showResponsibleFilter,
 }: TicketsTableFiltersProps) {
   const responsible = withAllOption(
     responsibleOptions.map((option) => ({
@@ -37,16 +38,18 @@ export function TicketsTableFilters({
         value={search}
       />
 
-      <Select.Root
-        aria-label="Filtrar por responsável"
-        value={responsible.toSelectValue(responsibleId)}
-        onChange={(v) => onResponsibleChange(responsible.fromSelectValue(v))}
-        placeholder="Todos os responsáveis"
-        showClear={responsibleId !== null}
-        onClear={() => onResponsibleChange(null)}
-      >
-        <Select.Content options={responsible.options} />
-      </Select.Root>
+      {showResponsibleFilter && (
+        <Select.Root
+          aria-label="Filtrar por responsável"
+          value={responsible.toSelectValue(responsibleId)}
+          onChange={(v) => onResponsibleChange(responsible.fromSelectValue(v))}
+          placeholder="Todos os responsáveis"
+          showClear={responsibleId !== null}
+          onClear={() => onResponsibleChange(null)}
+        >
+          <Select.Content options={responsible.options} />
+        </Select.Root>
+      )}
 
       <Select.Root
         aria-label="Filtrar por status"

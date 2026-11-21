@@ -22,3 +22,12 @@ export const h2 = style({
   fontWeight: 600,
   marginBottom: "1rem",
 });
+
+export const queueLink = style({
+  margin: "1rem",
+  padding: "0.75rem 1rem",
+  color: colors.primary,
+  fontSize: "0.875rem",
+  fontWeight: 600,
+  textDecoration: "none",
+});

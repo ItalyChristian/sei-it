@@ -9,7 +9,7 @@ export interface TicketsTableProps {
   referenceDate: string;
   isLoading: boolean;
 
-  variant?: "manager" | "operator";
+  variant?: "manager" | "operator" | "client";
   currentUserId?: string;
 }
 
@@ -18,6 +18,6 @@ export interface TicketsTableWrapperProps {
   initialFilter?: InitialFilter;
 }
 
-export type TicketsTableVariant = "manager" | "operator";
+export type TicketsTableVariant = "manager" | "operator" | "client";
 
 export type InitialFilter = "all" | "mine" | "unassigned" | "sla-at-risk";

@@ -9,4 +9,5 @@ export interface TicketsTableFiltersProps {
   onSearchChange: (value: string) => void;
   onResponsibleChange: (value: string | null) => void;
   onStatusChange: (value: SlaStatus | null) => void;
+  showResponsibleFilter: boolean;
 }
