@@ -26,8 +26,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = sessionStorage.getItem(STORAGE_KEY);
       if (stored) {
+        // Storage is only available after hydration; restore this tab's session here.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUser(JSON.parse(stored));
       }
     } catch (e) {
@@ -39,12 +41,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = (newUser: User) => {
     setUser(newUser);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_KEY);
   };
 
   return (
