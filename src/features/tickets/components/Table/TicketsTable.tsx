@@ -36,7 +36,7 @@ export function TicketsTable({
   const [responsibleId, setResponsibleId] = useState<string | null>(() =>
     variant === "operator" ? (currentUserId ?? "") : null,
   );
-  const [status, setStatus] = useState<SlaStatus | null>(null);
+  const [status, setStatus] = useState<SlaStatus | null>(SlaStatus.IN_PROGRESS);
   const [slaFilter, setSlaFilter] = useState<TicketSlaFilterValue | null>(null);
   const [priority, setPriority] = useState<SlaPriority | null>(null);
   const [first, setFirst] = useState(0);
@@ -89,11 +89,8 @@ export function TicketsTable({
         .join(" ")
         .toLocaleLowerCase("pt-BR");
       const matchesResponsible =
-        responsibleId === null
-          ? true
-          : variant === "operator" && responsibleId === currentUserId
-            ? ticket.responsavel_id === currentUserId || !ticket.responsavel_id
-            : (ticket.responsavel_id ?? "") === responsibleId;
+        responsibleId === null ||
+        (ticket.responsavel_id ?? "") === responsibleId;
 
       return (
         (!query || searchableText.includes(query)) &&
@@ -115,14 +112,19 @@ export function TicketsTable({
     categoryNames,
     referenceDate,
     variant,
-    currentUserId,
   ]);
 
   return (
     <>
       <TicketsTableFilters
         onResponsibleChange={(value) => {
+          const wasUnassigned = responsibleId === "";
           setResponsibleId(value);
+          if (value === "") {
+            setStatus(SlaStatus.OPEN);
+          } else if (wasUnassigned) {
+            setStatus(SlaStatus.IN_PROGRESS);
+          }
           setFirst(0);
         }}
         onSearchChange={(value) => {
