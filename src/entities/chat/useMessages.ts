@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMessages, postMessage } from "./chat.api";
 import { Message } from "./message.types";
+import { websocketMock } from "@/shared/lib/websocket-mock";
 
 export function useMessages(ticketId: string | null) {
   return useQuery({
@@ -8,6 +9,7 @@ export function useMessages(ticketId: string | null) {
     queryFn: () => getMessages(ticketId!),
     enabled: Boolean(ticketId),
     placeholderData: [],
+    refetchInterval: 2000,
   });
 }
 
@@ -24,8 +26,12 @@ export function usePostMessage(ticketId: string) {
       type: Message["tipo"];
       authorId: string;
     }) => postMessage(ticketId, content, type, authorId),
-    onSuccess: () => {
+    onSuccess: (message) => {
       queryClient.invalidateQueries({ queryKey: ["messages", ticketId] });
+      websocketMock.publish({
+        tipo: "mensagem.adicionada",
+        payload: message,
+      });
     },
   });
 }

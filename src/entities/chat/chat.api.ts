@@ -1,10 +1,8 @@
-import { messagesMockDb } from "@/mocks/messages.mock";
 import { Message } from "./message.types";
+import { http } from "@/shared/lib/http-client.lib";
 
 export function getMessages(ticketId: string): Promise<Message[]> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(messagesMockDb.listByTicket(ticketId)), 300);
-  });
+  return http<Message[]>(`/tickets/${ticketId}/messages`);
 }
 
 export function postMessage(
@@ -13,16 +11,8 @@ export function postMessage(
   type: Message["tipo"],
   authorId: string,
 ): Promise<Message> {
-  const newMessage: Message = {
-    id: `msg-${ticketId}-${Date.now()}`,
-    ticket_id: ticketId,
-    autor_id: authorId,
-    tipo: type,
-    conteudo: content,
-    criado_em: new Date().toISOString(),
-  };
-
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(newMessage), 300);
+  return http<Message>(`/tickets/${ticketId}/messages`, {
+    method: "POST",
+    data: { content, type, authorId },
   });
 }
