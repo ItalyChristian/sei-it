@@ -1,7 +1,13 @@
 "use client";
 
 import { priorityBadge, priorityLabels } from "@/entities/sla/sla-priority-map";
+import { SlaPriority } from "@/entities/sla/sla-priority.types";
 import { SlaStatus } from "@/entities/sla/sla-status.types";
+import {
+  evaluateTicketSla,
+  formatSlaDuration,
+  TicketSlaFilterValue,
+} from "@/entities/sla/ticket-sla";
 import { statusBadge, statusLabel } from "@/entities/ticket/ticket-status-map";
 import type { Ticket } from "@/entities/ticket/ticket.types";
 import { EmptyState } from "@/shared/components/EmptyState";
@@ -24,10 +30,15 @@ export function TicketsTable({
   referenceDate,
   isLoading,
   variant,
+  currentUserId,
 }: TicketsTableProps) {
   const [search, setSearch] = useState("");
-  const [responsibleId, setResponsibleId] = useState<string | null>(null);
+  const [responsibleId, setResponsibleId] = useState<string | null>(() =>
+    variant === "operator" ? (currentUserId ?? "") : null,
+  );
   const [status, setStatus] = useState<SlaStatus | null>(null);
+  const [slaFilter, setSlaFilter] = useState<TicketSlaFilterValue | null>(null);
+  const [priority, setPriority] = useState<SlaPriority | null>(null);
   const [first, setFirst] = useState(0);
 
   const userNames = useMemo(
@@ -41,8 +52,15 @@ export function TicketsTable({
   );
 
   const responsibleOptions = useMemo(
-    () => getResponsibleOptions(users),
-    [users],
+    () => {
+      const options = getResponsibleOptions(users);
+      return variant === "operator"
+        ? options.filter(
+            (option) => option.id === "" || option.id === currentUserId,
+          )
+        : options;
+    },
+    [users, variant, currentUserId],
   );
 
   const TicketsTable = useMemo(() => {
@@ -53,25 +71,52 @@ export function TicketsTable({
         userNames.get(ticket.responsavel_id ?? "") ?? "Não atribuído";
       const categoryName =
         categoryNames.get(ticket.categoria_id) ?? "Sem categoria";
+      const sla = evaluateTicketSla(ticket, referenceDate);
+      const slaText = [
+        sla.label,
+        sla.durationMs === null ? "" : formatSlaDuration(sla.durationMs),
+      ].join(" ");
       const searchableText = [
         ticket.numero,
         ticket.titulo,
         responsibleName,
-        categoryName,
-        priorityLabels[ticket.prioridade],
         statusLabel[ticket.status],
+        slaText,
+        ...(variant === "client"
+          ? []
+          : [categoryName, priorityLabels[ticket.prioridade]]),
       ]
         .join(" ")
         .toLocaleLowerCase("pt-BR");
+      const matchesResponsible =
+        responsibleId === null
+          ? true
+          : variant === "operator" && responsibleId === currentUserId
+            ? ticket.responsavel_id === currentUserId || !ticket.responsavel_id
+            : (ticket.responsavel_id ?? "") === responsibleId;
 
       return (
         (!query || searchableText.includes(query)) &&
-        (responsibleId === null ||
-          (ticket.responsavel_id ?? "") === responsibleId) &&
-        (status === null || ticket.status === status)
+        matchesResponsible &&
+        (status === null || ticket.status === status) &&
+        (priority === null || ticket.prioridade === priority) &&
+        (slaFilter === null ||
+          sla.filterValue === slaFilter)
       );
     });
-  }, [tickets, search, responsibleId, status, userNames, categoryNames]);
+  }, [
+    tickets,
+    search,
+    responsibleId,
+    status,
+    priority,
+    slaFilter,
+    userNames,
+    categoryNames,
+    referenceDate,
+    variant,
+    currentUserId,
+  ]);
 
   return (
     <>
@@ -88,11 +133,23 @@ export function TicketsTable({
           setStatus(value);
           setFirst(0);
         }}
+        onSlaFilterChange={(value) => {
+          setSlaFilter(value);
+          setFirst(0);
+        }}
+        onPriorityChange={(value) => {
+          setPriority(value);
+          setFirst(0);
+        }}
         responsibleId={responsibleId}
         responsibleOptions={responsibleOptions}
         search={search}
         status={status}
-        showResponsibleFilter={variant === "manager"}
+        slaFilter={slaFilter}
+        priority={priority}
+        showResponsibleFilter={variant !== "client"}
+        showAllResponsibleOption={variant !== "operator"}
+        showPriorityFilter={variant === "operator"}
       />
 
       <DataTable

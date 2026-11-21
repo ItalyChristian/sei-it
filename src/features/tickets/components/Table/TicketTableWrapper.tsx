@@ -69,6 +69,7 @@ export function TicketsTableWrapper({
 
   return (
     <TicketsTable
+      key={`${variant}-${user?.id ?? ""}`}
       categories={categories}
       isLoading={isLoadingTickets || isLoadingCategories || isLoadingUsers}
       referenceDate={referenceDate}

@@ -21,6 +21,6 @@ export function updateTicketStatus(
 export function assignTicket(ticketId: string, userId: string) {
   return http<Ticket>(`/tickets/${ticketId}`, {
     method: "PATCH",
-    data: { responsibleId: userId },
+    data: { responsibleId: userId, userId },
   });
 }

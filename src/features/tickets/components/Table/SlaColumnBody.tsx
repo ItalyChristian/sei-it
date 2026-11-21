@@ -1,39 +1,20 @@
-import {
-  slaDeadlineBadge,
-  type SlaDeadlineStatus,
-} from "@/entities/sla/sla-deadline-status-map";
+import { evaluateTicketSla, formatSlaDuration } from "@/entities/sla/ticket-sla";
 import type { Ticket } from "@/entities/ticket/ticket.types";
-
-const hourInMs = 60 * 60 * 1000;
+import * as styles from "./sla-column.css";
 
 export function SlaColumnBody(ticket: Ticket, asOfDate: string) {
-  const resolvedAt = ticket.resolvido_em ?? ticket.fechado_em;
+  const evaluation = evaluateTicketSla(ticket, asOfDate);
 
-  const referenceTimestamp = Date.parse(resolvedAt ?? asOfDate);
-
-  const remaining = Date.parse(ticket.prazo_resolucao) - referenceTimestamp;
-
-  const isOverdue = remaining < 0;
-
-  const isAtRisk = !resolvedAt && remaining < 2 * hourInMs;
-
-  const status: SlaDeadlineStatus = isOverdue
-    ? "overdue"
-    : isAtRisk
-      ? "risk"
-      : "ok";
-
-  let label = "Cumprido";
-
-  if (!resolvedAt && remaining >= 2 * hourInMs) {
-    label = `${Math.floor(remaining / hourInMs)}h`;
-  } else if (!resolvedAt && remaining >= 0) {
-    const hours = Math.floor(remaining / hourInMs);
-    const minutes = Math.floor((remaining % hourInMs) / 60000);
-    label = `${hours}h ${minutes}m`;
-  } else if (isOverdue) {
-    label = "Excedido";
-  }
-
-  return <span className={slaDeadlineBadge[status]}>{label}</span>;
+  return (
+    <div className={styles.slaInfo}>
+      {evaluation.durationMs !== null && (
+        <span className={styles.duration}>
+          {formatSlaDuration(evaluation.durationMs)}
+        </span>
+      )}
+      <span className={styles.badge[evaluation.badgeStatus]}>
+        {evaluation.label}
+      </span>
+    </div>
+  );
 }

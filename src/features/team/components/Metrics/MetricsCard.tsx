@@ -28,7 +28,7 @@ export const MetricsCard = ({ workload }: MetricsCardProps) => {
           </div>
         </div>
         {badgeLabel && badgeTone && (
-          <span className={`${badgeBase} ${tone[badgeTone]}`}>
+          <span className={`${badgeBase} ${tone[badgeTone]} ${styles.badge}`}>
             {badgeLabel}
           </span>
         )}

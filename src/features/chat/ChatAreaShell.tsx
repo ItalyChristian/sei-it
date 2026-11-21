@@ -4,7 +4,10 @@ import { useTickets } from "@/entities/ticket/useTickets";
 import { getTicketsVisibleToUser } from "@/entities/ticket/ticket-access";
 import { useUsers } from "@/entities/user/useUsers";
 import { useAuth } from "@/shared/contexts/session.context";
+import { backLink } from "@/shared/styles/components/back-link.css";
 import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { TicketList } from "../tickets/components/TicketList";
 import * as styles from "./chat-area-shell.css";
@@ -42,19 +45,27 @@ export function ChatAreaShell() {
 
   return (
     <div className={styles.shell}>
-      <TicketList
-        tickets={myTickets}
-        selectedTicketId={selectedTicketId}
-        onSelectTicket={setSelectedTicketId}
-        unreadTickets={unreadTickets}
-        isLoading={isLoading}
-      />
+      <div className={styles.toolbar}>
+        <Link href="/dashboard" className={backLink}>
+          <ArrowLeft size={16} />
+          Voltar para a Dashboard
+        </Link>
+      </div>
+      <div className={styles.content}>
+        <TicketList
+          tickets={myTickets}
+          selectedTicketId={selectedTicketId}
+          onSelectTicket={setSelectedTicketId}
+          unreadTickets={unreadTickets}
+          isLoading={isLoading}
+        />
 
-      <ChatArea
-        selectedTicket={selectedTicket}
-        users={users}
-        onBackToQueue={() => setSelectedTicketId(null)}
-      />
+        <ChatArea
+          selectedTicket={selectedTicket}
+          users={users}
+          onBackToQueue={() => setSelectedTicketId(null)}
+        />
+      </div>
     </div>
   );
 }

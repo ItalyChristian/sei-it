@@ -23,6 +23,31 @@ export const header = style({
   },
 });
 
+export const actions = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  flexWrap: "wrap",
+  gap: "8px",
+});
+
+export const collapseButton = style({
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "6px",
+  padding: "8px 12px",
+  color: colors.textDark,
+  fontSize: "13px",
+  fontWeight: 500,
+  border: `1px solid ${colors.border}`,
+  borderRadius: radii.md,
+  background: "white",
+  cursor: "pointer",
+  ":hover": {
+    background: colors.offWhite,
+  },
+});
+
 export const title = style({
   margin: 0,
 

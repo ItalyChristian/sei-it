@@ -12,6 +12,7 @@ export const SelectRoot = ({
   disabled,
   placeholder = "Selecione...",
   className,
+  ariaLabel,
   showClear,
   onClear,
 }: SelectRootProps) => {
@@ -32,7 +33,11 @@ export const SelectRoot = ({
         onValueChange={onChange}
         disabled={disabled}
       >
-        <RadixSelect.Trigger className={styles.selectInput} disabled={disabled}>
+        <RadixSelect.Trigger
+          aria-label={ariaLabel}
+          className={styles.selectInput}
+          disabled={disabled}
+        >
           <RadixSelect.Value
             className={styles.selectValue}
             placeholder={placeholder}

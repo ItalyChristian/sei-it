@@ -8,10 +8,11 @@ import { UserRole } from "@/entities/user/user-roles.enum";
 import { User } from "@/entities/user/user.types";
 import { LoadingState } from "@/shared/components/LoadingState";
 import { useAuth } from "@/shared/contexts/session.context";
+import { backLink } from "@/shared/styles/components/back-link.css";
+import { toast } from "react-toastify";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { MessageComposer } from "../MessageComposer/MessageComposer";
 import { MessageList } from "../MessageList/MessageList";
@@ -31,7 +32,6 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
     ? messages.filter((message) => message.tipo === "public")
     : messages;
   const assignMutation = useAssignTicket(ticket.id);
-  const [assignmentError, setAssignmentError] = useState("");
 
   const router = useRouter();
   const enrichedMessages: MessageWithAuthor[] = visibleMessages.map((m) => ({
@@ -41,18 +41,17 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
 
   const handleAssume = async () => {
     if (!user) return;
-    setAssignmentError("");
     try {
       await assignMutation.mutateAsync(user.id);
       router.push(`/tickets/${ticket.id}`);
     } catch {
-      setAssignmentError("Não foi possível assumir o chamado. Tente novamente.");
+      toast.error("Não foi possível assumir o chamado. Tente novamente.");
     }
   };
 
   const backToQueueControl = onBackToQueue ? (
     <button
-      className={styles.backLink}
+      className={backLink}
       onClick={onBackToQueue}
       type="button"
     >
@@ -60,15 +59,22 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
       Voltar para a fila
     </button>
   ) : (
-    <Link href="/chat" className={styles.backLink}>
+    <Link href="/chat" className={backLink}>
       <ArrowLeft size={16} />
       Voltar para a fila
     </Link>
   );
+  const dashboardControl = !onBackToQueue ? (
+    <Link href="/dashboard" className={backLink}>
+      <ArrowLeft size={16} />
+      Voltar para a Dashboard
+    </Link>
+  ) : null;
 
   if (isLoading) {
     return (
       <div className={styles.panel}>
+        {dashboardControl}
         {backToQueueControl}
         <ChatHeader
           ticket={ticket}
@@ -83,6 +89,7 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
 
   return (
     <div className={styles.panel}>
+      {dashboardControl}
       {backToQueueControl}
       <ChatHeader
         ticket={ticket}
@@ -90,7 +97,6 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
         onAssume={handleAssume}
         isAssuming={assignMutation.isPending}
       />
-      {assignmentError && <p role="alert">{assignmentError}</p>}
 
       <MessageList messages={enrichedMessages} isLoading={isLoading} />
 

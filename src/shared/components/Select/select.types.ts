@@ -7,6 +7,7 @@ export interface SelectRootProps {
   disabled?: boolean;
   placeholder?: string;
   className?: string;
+  ariaLabel?: string;
   showClear?: boolean;
   onClear?: () => void;
 }

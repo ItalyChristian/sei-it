@@ -16,20 +16,6 @@ export const topBar = style({
   alignItems: "center",
 });
 
-export const backLink = style({
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "6px",
-  fontSize: "13px",
-  fontWeight: 500,
-  color: colors.textMuted,
-  textDecoration: "none",
-  transition: "color 0.15s",
-  ":hover": {
-    color: colors.primary,
-  },
-});
-
 export const content = style({
   flex: 1,
   display: "flex",

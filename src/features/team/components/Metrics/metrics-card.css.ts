@@ -8,13 +8,15 @@ export const card = style({
 
 export const header = style({
   display: "flex",
+  flexWrap: "wrap",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "flex-start",
   gap: "12px",
 });
 
 export const identity = style({
   display: "flex",
+  flex: "1 1 180px",
   alignItems: "center",
   gap: "12px",
   minWidth: 0,
@@ -35,11 +37,20 @@ export const avatar = style({
 });
 
 export const name = style({
+  minWidth: 0,
   overflow: "hidden",
   textOverflow: "ellipsis",
   whiteSpace: "nowrap",
   fontWeight: 600,
   fontSize: "15px",
+});
+
+export const badge = style({
+  flexShrink: 0,
+  maxWidth: "100%",
+  whiteSpace: "normal",
+  overflowWrap: "anywhere",
+  textAlign: "center",
 });
 
 export const status = styleVariants({
@@ -76,6 +87,7 @@ export const loadFillTone = styleVariants({
 
 export const stats = style({
   display: "flex",
+  flexWrap: "wrap",
   justifyContent: "space-between",
   gap: "8px",
   color: colors.textMuted,

@@ -9,7 +9,7 @@ export const sidebar = style({
   flexDirection: "column",
   background: "white",
   borderRight: `1px solid ${colors.border}`,
-  height: "100vh",
+  height: "100%",
 });
 
 export const header = style({
@@ -37,6 +37,11 @@ export const search = style({
   outline: "none",
   ":focus": {
     borderColor: colors.primary,
+  },
+  selectors: {
+    "&::-webkit-search-cancel-button": {
+      cursor: "pointer",
+    },
   },
 });
 

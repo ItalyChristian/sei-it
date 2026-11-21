@@ -5,6 +5,7 @@ import { canUserAccessTicket } from "@/entities/ticket/ticket-access";
 import { useUsers } from "@/entities/user/useUsers";
 import { ChatPanel } from "@/features/chat/components/ChatPanel/ChatPanel";
 import { useAuth } from "@/shared/contexts/session.context";
+import { backLink } from "@/shared/styles/components/back-link.css";
 import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
@@ -51,7 +52,11 @@ export const TicketDetail = ({ id }: TicketDetailProps) => {
       <div className={styles.notFound}>
         <h1>Chamado indisponível</h1>
         <p>O chamado não existe ou não está disponível para este perfil.</p>
-        <Link href="/chat" className={styles.backLink}>
+        <Link href="/dashboard" className={backLink}>
+          <ArrowLeft size={16} />
+          Voltar para a Dashboard
+        </Link>
+        <Link href="/chat" className={backLink}>
           <ArrowLeft size={16} />
           Voltar para a fila
         </Link>
