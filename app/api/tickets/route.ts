@@ -1,6 +1,8 @@
 import { ticketMockDb } from "@/mocks/db/ticket.mock-db";
 import { categoryMockDb } from "@/mocks/db/category.mock-db";
 import { userMockDb } from "@/mocks/db/user.mock-db";
+import { messagesMockDb } from "@/mocks/messages.mock";
+import { Message } from "@/entities/chat/message.types";
 import { UserRole } from "@/entities/user/user-roles.enum";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -57,5 +59,15 @@ export async function POST(request: NextRequest) {
     groupId: category.grupo_id,
     requesterId: requester.id,
   });
+  const initialMessage: Message = {
+    id: `msg-${crypto.randomUUID()}`,
+    ticket_id: ticket.id,
+    autor_id: ticket.solicitante_id,
+    tipo: "public",
+    conteudo: ticket.descricao,
+    criado_em: ticket.aberto_em,
+  };
+  messagesMockDb.add(initialMessage);
+
   return NextResponse.json(ticket, { status: 201 });
 }
