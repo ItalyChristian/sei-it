@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import "primeicons/primeicons.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
+import "react-toastify/dist/ReactToastify.css";
 import "../src/shared/styles/globals.css";
 import AppProviders from "./_providers";
 import "./globals.css";
