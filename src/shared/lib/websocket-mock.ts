@@ -1,4 +1,5 @@
 import { Message } from "@/entities/chat/message.types";
+import { UserRole } from "@/entities/user/user-roles.enum";
 
 /**
  * Tipos de eventos do WebSocket (conforme requisito).
@@ -10,6 +11,16 @@ export type RealtimeEvent =
       payload: { ticket_id: string; consultor_id: string };
     }
   | { tipo: "mensagem.adicionada"; payload: Message }
+  | {
+      tipo: "usuario.digitando";
+      payload: {
+        ticket_id: string;
+        usuario_id: string;
+        nome: string;
+        perfil: UserRole;
+        digitando: boolean;
+      };
+    }
   | {
       tipo: "status.alterado";
       payload: {

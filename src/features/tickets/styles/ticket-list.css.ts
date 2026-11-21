@@ -1,6 +1,12 @@
 import { colors } from "@/shared/styles/colors.css";
 import { radii } from "@/shared/styles/sizes.css";
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
+
+const typingPulse = keyframes({
+  "0%, 20%": { opacity: 0.25 },
+  "50%": { opacity: 1 },
+  "80%, 100%": { opacity: 0.25 },
+});
 
 export const sidebar = style({
   width: "400px",
@@ -29,7 +35,7 @@ export const heading = style({
 
 export const search = style({
   width: "100%",
-  padding: "9px 12px",
+  padding: "9px 34px",
   border: `1px solid ${colors.border}`,
   borderRadius: radii.md,
   color: colors.textDark,
@@ -38,10 +44,38 @@ export const search = style({
   ":focus": {
     borderColor: colors.primary,
   },
-  selectors: {
-    "&::-webkit-search-cancel-button": {
-      cursor: "pointer",
-    },
+});
+
+export const searchWrap = style({
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+});
+
+export const searchIcon = style({
+  position: "absolute",
+  left: "11px",
+  color: colors.textMuted,
+  pointerEvents: "none",
+});
+
+export const clearSearch = style({
+  position: "absolute",
+  right: "7px",
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  width: "24px",
+  height: "24px",
+  padding: 0,
+  border: "none",
+  borderRadius: radii.full,
+  background: "transparent",
+  color: colors.textMuted,
+  cursor: "pointer",
+  ":hover": {
+    background: colors.offWhite,
+    color: colors.textDark,
   },
 });
 
@@ -145,6 +179,19 @@ export const itemSnippet = style({
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
+});
+
+export const typingSnippet = style({
+  color: colors.primary,
+  fontWeight: 600,
+  selectors: {
+    "&::after": {
+      content: '"..."',
+      display: "inline-block",
+      width: "18px",
+      animation: `${typingPulse} 1.2s ease-in-out infinite`,
+    },
+  },
 });
 
 export const loading = style({

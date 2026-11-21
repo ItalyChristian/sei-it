@@ -4,7 +4,11 @@ import { RealtimeEvent, websocketMock } from "@/shared/lib/websocket-mock";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-export function useRealtimeEvents() {
+export function useRealtimeEvents(
+  onTyping?: (
+    payload: Extract<RealtimeEvent, { tipo: "usuario.digitando" }>["payload"],
+  ) => void,
+) {
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -22,6 +26,9 @@ export function useRealtimeEvents() {
         case "chamado.aberto":
           queryClient.invalidateQueries({ queryKey: ["tickets"] });
           break;
+        case "usuario.digitando":
+          onTyping?.(event.payload);
+          break;
       }
     });
 
@@ -29,5 +36,5 @@ export function useRealtimeEvents() {
       unsubscribe();
       websocketMock.disconnect();
     };
-  }, [queryClient]);
+  }, [queryClient, onTyping]);
 }

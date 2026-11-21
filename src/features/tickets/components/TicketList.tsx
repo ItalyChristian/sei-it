@@ -12,6 +12,7 @@ import * as styles from "../styles/ticket-list.css";
 import { TicketListEmptyState } from "./EmptyState";
 import { snippet } from "../trim-description";
 import { TicketListLoading } from "./TicketListLoading";
+import { Search, X } from "lucide-react";
 
 type FilterType = "mine" | "unassigned" | "overdue";
 
@@ -20,6 +21,7 @@ interface TicketListProps {
   selectedTicketId: string | null;
   onSelectTicket: (id: string) => void;
   unreadTickets: Set<string>;
+  typingTicketIds: Set<string>;
   isLoading: boolean;
 }
 
@@ -28,6 +30,7 @@ export function TicketList({
   selectedTicketId,
   onSelectTicket,
   unreadTickets,
+  typingTicketIds,
   isLoading,
 }: TicketListProps) {
   const { user } = useAuth();
@@ -95,14 +98,27 @@ export function TicketList({
         <h2 className={styles.heading}>
           {isClient ? "Meus chamados" : "Fila de trabalho"}
         </h2>
-        <input
-          aria-label="Buscar chamado por ID ou título"
-          className={styles.search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Buscar por ID ou título..."
-          type="search"
-          value={search}
-        />
+        <div className={styles.searchWrap}>
+          <Search size={16} aria-hidden="true" className={styles.searchIcon} />
+          <input
+            aria-label="Buscar chamado por ID ou título"
+            className={styles.search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Buscar por ID ou título..."
+            type="text"
+            value={search}
+          />
+          {search && (
+            <button
+              type="button"
+              aria-label="Limpar busca"
+              className={styles.clearSearch}
+              onClick={() => setSearch("")}
+            >
+              <X size={15} />
+            </button>
+          )}
+        </div>
         {!isClient && (
           <div className={styles.pills}>
             <button
@@ -155,8 +171,15 @@ export function TicketList({
                   </div>
                 </div>
                 <div className={styles.itemTitle}>{ticket.titulo}</div>
-                <div className={styles.itemSnippet}>
-                  {snippet(ticket.descricao)}
+                <div
+                  className={`${styles.itemSnippet} ${
+                    typingTicketIds.has(ticket.id) ? styles.typingSnippet : ""
+                  }`}
+                  role={typingTicketIds.has(ticket.id) ? "status" : undefined}
+                >
+                  {typingTicketIds.has(ticket.id)
+                    ? "Digitando"
+                    : snippet(ticket.descricao)}
                 </div>
               </button>
             );

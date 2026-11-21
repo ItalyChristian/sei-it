@@ -9,10 +9,12 @@ import { User } from "@/entities/user/user.types";
 import { LoadingState } from "@/shared/components/LoadingState";
 import { useAuth } from "@/shared/contexts/session.context";
 import { backLink } from "@/shared/styles/components/back-link.css";
+import { useRealtimeEvents } from "@/shared/hooks/useRealTimeEvents";
 import { toast } from "react-toastify";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChatHeader } from "../ChatHeader/ChatHeader";
 import { MessageComposer } from "../MessageComposer/MessageComposer";
 import { MessageList } from "../MessageList/MessageList";
@@ -21,11 +23,50 @@ import * as styles from "./chat-panel.css";
 interface ChatPanelProps {
   ticket: Ticket;
   users: User[];
+  typingLabel?: string | null;
   onBackToQueue?: () => void;
 }
 
-export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
+export function ChatPanel({
+  ticket,
+  users,
+  typingLabel,
+  onBackToQueue,
+}: ChatPanelProps) {
   const { user } = useAuth();
+  const [activeTypingName, setActiveTypingName] = useState<string | null>(null);
+  const typingTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleTyping = useCallback(
+    (payload: {
+      ticket_id: string;
+      usuario_id: string;
+      nome: string;
+      digitando: boolean;
+    }) => {
+      if (payload.ticket_id !== ticket.id || payload.usuario_id === user?.id) {
+        return;
+      }
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+      setActiveTypingName(payload.digitando ? payload.nome : null);
+      if (payload.digitando) {
+        typingTimeout.current = setTimeout(() => setActiveTypingName(null), 2500);
+      }
+    },
+    [ticket.id, user?.id],
+  );
+  useRealtimeEvents(handleTyping);
+
+  useEffect(
+    () => () => {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+    },
+    [],
+  );
+
+  const currentTypingLabel =
+    typingLabel ??
+    (activeTypingName ? `${activeTypingName} digitando` : null);
+
   const { data: messages = [], isLoading } = useMessages(ticket.id);
   const isClient = user?.perfil === UserRole.CLIENT;
   const visibleMessages = isClient
@@ -79,6 +120,7 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
         <ChatHeader
           ticket={ticket}
           users={users}
+          typingLabel={currentTypingLabel}
           onAssume={() => {}}
           isAssuming={assignMutation.isPending}
         />
@@ -94,6 +136,7 @@ export function ChatPanel({ ticket, users, onBackToQueue }: ChatPanelProps) {
       <ChatHeader
         ticket={ticket}
         users={users}
+        typingLabel={currentTypingLabel}
         onAssume={handleAssume}
         isAssuming={assignMutation.isPending}
       />

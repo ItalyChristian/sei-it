@@ -6,12 +6,14 @@ import { ChatPanelEmptyState } from "./ChatPanelEmptyState";
 interface ChatAreaProps {
   selectedTicket: Ticket | null;
   users: User[];
+  typingLabel?: string | null;
   onBackToQueue: () => void;
 }
 
 export function ChatArea({
   selectedTicket,
   users,
+  typingLabel,
   onBackToQueue,
 }: ChatAreaProps) {
   if (!selectedTicket) {
@@ -22,6 +24,7 @@ export function ChatArea({
     <ChatPanel
       ticket={selectedTicket}
       users={users}
+      typingLabel={typingLabel}
       onBackToQueue={onBackToQueue}
     />
   );

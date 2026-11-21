@@ -17,6 +17,7 @@ import * as styles from "./chat-header.css";
 interface ChatHeaderProps {
   ticket: Ticket;
   users: User[];
+  typingLabel?: string | null;
   onAssume: () => void;
   isAssuming: boolean;
 }
@@ -24,6 +25,7 @@ interface ChatHeaderProps {
 export function ChatHeader({
   ticket,
   users,
+  typingLabel,
   onAssume,
   isAssuming,
 }: ChatHeaderProps) {
@@ -66,6 +68,11 @@ export function ChatHeader({
             )}
           </div>
           <h1 className={styles.title}>{ticket.titulo}</h1>
+          {typingLabel && (
+            <span className={styles.typingIndicator} role="status">
+              {typingLabel}
+            </span>
+          )}
         </div>
 
         <div className={styles.actions}>
