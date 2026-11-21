@@ -28,19 +28,19 @@ type Listener = (event: RealtimeEvent) => void;
  * Emite eventos fake em intervalos regulares para simular tempo real.
  */
 class WebSocketMock extends EventTarget {
-  private intervalId: ReturnType<typeof setInterval> | null = null;
+  private channel: BroadcastChannel | null = null;
 
   connect() {
-    if (this.intervalId) return;
-    // A cada 15s, emite um evento fake
-    this.intervalId = setInterval(() => this.emitRandomEvent(), 15_000);
+    if (typeof BroadcastChannel === "undefined" || this.channel) return;
+    this.channel = new BroadcastChannel("sei-it-events");
+    this.channel.onmessage = (message: MessageEvent<RealtimeEvent>) => {
+      this.emit(message.data);
+    };
   }
 
   disconnect() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
+    this.channel?.close();
+    this.channel = null;
   }
 
   subscribe(listener: Listener): () => void {
@@ -56,24 +56,9 @@ class WebSocketMock extends EventTarget {
     this.dispatchEvent(new CustomEvent("message", { detail: event }));
   }
 
-  private emitRandomEvent() {
-    // Escolhe um evento aleatório para simular
-    const events: RealtimeEvent[] = [
-      {
-        tipo: "mensagem.adicionada",
-        payload: {
-          id: `msg-fake-${Date.now()}`,
-          ticket_id: "4ca8212a-d627-45c2-810d-a1ba92d0eaf0",
-          autor_id: "ae4d6fdf-bd5b-4fe0-879a-f86c41012b99",
-          tipo: "public",
-          conteudo:
-            "Atualização: o problema foi identificado e já está sendo corrigido.",
-          criado_em: new Date().toISOString(),
-        },
-      },
-    ];
-    const random = events[Math.floor(Math.random() * events.length)];
-    this.emit(random);
+  publish(event: RealtimeEvent) {
+    this.emit(event);
+    this.channel?.postMessage(event);
   }
 }
 
