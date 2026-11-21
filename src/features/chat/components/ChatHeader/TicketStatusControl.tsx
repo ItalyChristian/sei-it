@@ -5,6 +5,8 @@ import { statusLabel } from "@/entities/ticket/ticket-status-map";
 import { useUpdateTicketStatus } from "@/entities/ticket/useTickets";
 import { UserRole } from "@/entities/user/user-roles.enum";
 import { useAuth } from "@/shared/contexts/session.context";
+import { Select } from "@/shared/components/Select";
+import { Button, TextField } from "@radix-ui/themes";
 import { FormEvent, useState } from "react";
 import * as styles from "./ticket-status-control.css";
 
@@ -39,29 +41,33 @@ export function TicketStatusControl({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <label className={styles.label} htmlFor={`ticket-status-${ticketId}`}>
-        Alterar status
-      </label>
-      <select
+      <span className={styles.label}>Alterar status</span>
+      <Select.Root
+        ariaLabel="Alterar status"
         className={styles.select}
-        id={`ticket-status-${ticketId}`}
-        onChange={(event) => setStatus(event.target.value as SlaStatus)}
+        onChange={(value) => {
+          const selected = Object.values(SlaStatus).find(
+            (statusOption) => statusOption === value,
+          );
+          if (selected) setStatus(selected);
+        }}
         value={status}
       >
-        {Object.values(SlaStatus).map((value) => (
-          <option key={value} value={value}>
-            {statusLabel[value]}
-          </option>
-        ))}
-      </select>
-      <input
+        <Select.Content
+          options={Object.values(SlaStatus).map((value) => ({
+            label: statusLabel[value],
+            value,
+          }))}
+        />
+      </Select.Root>
+      <TextField.Root
         aria-label="Motivo da alteração do status"
         className={styles.reason}
         onChange={(event) => setReason(event.target.value)}
         placeholder="Motivo obrigatório"
         value={reason}
       />
-      <button
+      <Button
         className={styles.submit}
         disabled={
           mutation.isPending || !reason.trim() || status === currentStatus
@@ -69,7 +75,7 @@ export function TicketStatusControl({
         type="submit"
       >
         {mutation.isPending ? "Salvando..." : "Salvar"}
-      </button>
+      </Button>
       {mutation.isError && (
         <span className={styles.error} role="alert">
           Não foi possível atualizar o status. Tente novamente.
